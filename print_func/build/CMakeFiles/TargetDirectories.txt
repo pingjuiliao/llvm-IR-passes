@@ -1,4 +1,0 @@
-/home/pingjui/llvm/atomic/build/CMakeFiles/edit_cache.dir
-/home/pingjui/llvm/atomic/build/CMakeFiles/intrinsics_gen.dir
-/home/pingjui/llvm/atomic/build/CMakeFiles/rebuild_cache.dir
-/home/pingjui/llvm/atomic/build/CMakeFiles/LLVMPrintFunc.dir

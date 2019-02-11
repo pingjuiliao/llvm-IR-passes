@@ -1,0 +1,4 @@
+/home/pingjui/llvm/simple_pass/print_func/bin/CMakeFiles/rebuild_cache.dir
+/home/pingjui/llvm/simple_pass/print_func/bin/CMakeFiles/edit_cache.dir
+/home/pingjui/llvm/simple_pass/print_func/bin/CMakeFiles/intrinsics_gen.dir
+/home/pingjui/llvm/simple_pass/print_func/bin/CMakeFiles/LLVMprint_func.dir

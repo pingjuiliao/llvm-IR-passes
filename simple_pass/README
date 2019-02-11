@@ -1,0 +1,29 @@
+## Each Directories is a small project
+
+## The CMakeLists.txt has been customized to make the directory the project name !
+
+## To create a new project,
+        
+        cp -r ./template ./My_New_Project
+
+## Package :
+
+# CMakeLists.txt
+
+# pass.cpp       : the llvm pass file. It will be compiled to 
+                    *.so file, which is the star of this project.
+
+# fibonacci.c.in : the main program file. We don't really care 
+                    about it. If we want to change it, modify 
+                    the CMakeLists again.
+
+# run.sh.in      : the command to run the pass is too long to 
+                    retype everytime. Hence the bash script.
+
+# ./bin/         : the binary compiled place, to compile the   
+                    project...
+
+        $ cd ./bin
+        $ cmake ..
+        $ make
+        $ ./run.sh
