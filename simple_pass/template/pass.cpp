@@ -19,8 +19,9 @@ namespace {
 
 char PrintFuncPass::ID = 0;
 
-static void registerPrintFuncPass(const PassManagerBuilder &, legacy::PassManagerBase &PM) {
+static void
+registerPrintFuncPass(const PassManagerBuilder &, legacy::PassManagerBase &PM) {
     PM.add(new PrintFuncPass());
 }
 static RegisterStandardPasses
-    RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerPrintFuncPass);
+RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerPrintFuncPass);
