@@ -124,5 +124,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/intrinsics_gen.dir/DependInfo.cmake"
-  "CMakeFiles/LLVMprint_func.dir/DependInfo.cmake"
+  "CMakeFiles/LLVMonly_operator_multiply.dir/DependInfo.cmake"
   )

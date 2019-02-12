@@ -13,8 +13,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.10.2/CMakeSystem.cmake"
   "CMakeFiles/feature_tests.c"
   "CMakeFiles/feature_tests.cxx"
-  "../compile.sh.in"
   "../main.c.in"
+  "../run.sh.in"
   "/usr/lib/llvm-6.0/cmake/LLVMConfig.cmake"
   "/usr/lib/llvm-6.0/cmake/LLVMConfigVersion.cmake"
   "/usr/lib/llvm-6.0/lib/cmake/llvm/LLVM-Config.cmake"
@@ -117,12 +117,12 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/3.10.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.10.2/CMakeCXXCompiler.cmake"
   "main.c"
-  "compile.sh"
+  "run.sh"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/intrinsics_gen.dir/DependInfo.cmake"
-  "CMakeFiles/LLVMprint_func.dir/DependInfo.cmake"
+  "CMakeFiles/LLVMget_IR.dir/DependInfo.cmake"
   )
