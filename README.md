@@ -12,6 +12,7 @@
     $ cd new_llvm_pass_project/bin
     $ cmake ..
     $ make
-    $ ./compile.sh
+    $ ./run.sh ## compile and shows the compile-time data
+    $ ./a.out  ## Transformed program !!!
 
 ```
