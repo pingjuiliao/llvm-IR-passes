@@ -3,6 +3,7 @@
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Transforms/IPO/PassManagerBuilder.h"
+#include "llvm/IR/InstIterator.h"
 using namespace llvm;
 
 namespace {
@@ -11,8 +12,9 @@ namespace {
         PrintFuncPass() : FunctionPass(ID) {}
 
         virtual bool runOnFunction(Function &F) {
-            errs() << "I saw a function called " << F.getName() << "!\n" ;
-            return false ;
+            for (inst_iterator I = inst_begin(F), E = inst_end(F); I != E; ++I)
+                errs() << *I << "\n";
+            return true ;
         }
     };
 }
