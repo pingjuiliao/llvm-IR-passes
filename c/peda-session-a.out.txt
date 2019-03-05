@@ -1,3 +1,2 @@
-break printA
-break *main + 324
+break main
 

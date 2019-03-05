@@ -22,7 +22,6 @@ namespace {
                         Value *lhs = op->getOperand(0);
                         Value *rhs = op->getOperand(1);
                         Value *mul = builder.CreateMul(lhs, rhs);
-
                         for (auto &U : op->uses()) {
                             User *user = U.getUser();
                             user->setOperand(U.getOperandNo(), mul);

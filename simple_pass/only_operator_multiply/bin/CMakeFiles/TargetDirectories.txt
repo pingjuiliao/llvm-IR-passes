@@ -1,4 +1,0 @@
-/home/pingjui/llvm/simple_pass/only_operator_multiply/bin/CMakeFiles/rebuild_cache.dir
-/home/pingjui/llvm/simple_pass/only_operator_multiply/bin/CMakeFiles/edit_cache.dir
-/home/pingjui/llvm/simple_pass/only_operator_multiply/bin/CMakeFiles/intrinsics_gen.dir
-/home/pingjui/llvm/simple_pass/only_operator_multiply/bin/CMakeFiles/LLVMonly_operator_multiply.dir
