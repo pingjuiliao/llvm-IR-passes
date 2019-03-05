@@ -15,7 +15,7 @@
 
 #include "llvm/IR/Type.h"
 #include "llvm/IR/DerivedTypes.h"
-
+#include "llvm/ADT/ilist.h"
 using namespace llvm;
 
 
@@ -47,11 +47,17 @@ namespace {
             StoreInst* push_canary   = builder.CreateStore(canary_cast, alloca_canary);
             
             // check : unfinished ...
+            inst_iterator function_back = inst_end(F);
+            --function_back ;
+            Instruction &last_inst = *function_back ;
+            errs() << last_inst.getOpcodeName() << "\n"; 
+
+
+            // print IRs
+            for (inst_iterator it = inst_begin(F), E= inst_end(F); it != E; ++it)
+                  errs() << *it << "\n";
             
 
-            for (inst_iterator I = inst_begin(F), E = inst_end(F); I != E; ++I)
-                  errs() << *I << "\n";
-    
 
             return true ;
         }

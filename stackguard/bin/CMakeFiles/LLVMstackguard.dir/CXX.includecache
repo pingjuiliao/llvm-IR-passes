@@ -31,6 +31,8 @@ llvm/IR/Type.h
 /home/pingjui/llvm/stackguard/llvm/IR/Type.h
 llvm/IR/DerivedTypes.h
 /home/pingjui/llvm/stackguard/llvm/IR/DerivedTypes.h
+llvm/ADT/ilist.h
+/home/pingjui/llvm/stackguard/llvm/ADT/ilist.h
 
 /usr/lib/llvm-6.0/include/llvm-c/Types.h
 llvm/Support/DataTypes.h
