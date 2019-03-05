@@ -5,16 +5,14 @@ uint32_t fibo(uint32_t n);
 
 int
 main( int argc, char** argv) {
-    uint32_t input = 0;
     uint32_t result = 0;
-    if ( argc < 2 ) {
-        printf("Usage: %s <fibonacci_parameter>\n", argv[0]);
-        exit(1);
+    uint32_t i , n = 1 ;
+    for ( i = 0 ; i < 10 ; ++i ) {
+        printf("%d + %d == %d\n", n, i , n + i) ;
+        n += i ;
     }
-    input = atoi(argv[1]);
-    result = fibo(input);
-    printf("fibbonacci(%u) number is %u\n", input, result);
     return 0;
+
 }
 
 uint32_t 

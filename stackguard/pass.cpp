@@ -18,23 +18,27 @@ namespace {
             errs() << "##############################\n" ;
             errs() << "#### " << F.getName() << "(..)\n" ;
             errs() << "##############################\n" ;
-
+            bool did_change = false ; 
+            bool first = true ;
             for ( auto &B: F ) {
                 for ( auto &I: B ) {
-                    if ( auto *op = dyn_cast<BinaryOperator>(&I) ) {
+                    IRBuilder<> builder(&I) ;
+                    Value* push_canary = builder.CreateAlloca();
+                    /* if ( auto *op = dyn_cast<BinaryOperator>(&I) ) {
+
+                        errs() << "Did make the change \n";
                         IRBuilder<> builder(op) ;
                         Value* x = op->getOperand(0);
-                        Value* or1 = builder.CreateOr(x, x);
-                        // Value* or2 = builder.CreateOr(x, x);
-                        // pi->getParent()->getInstList().insert(pi, or1);
-                        if ( auto pi = dyn_cast<Instruction>(or1) )
-                            pi->insertAfter(&I);
+                        Value* xor = builder.CreateXor(x, x);
+                        op->setOperand(xor, 1);
+                        did_change = true ; 
                         break ;
-                    }
+                    }*/
                 }
-                break ; 
+                if ( did_change ) {
+                    break ;
+                }
             }
-            
             for (inst_iterator I = inst_begin(F), E = inst_end(F); I != E; ++I)
                   errs() << *I << "\n";
 
