@@ -35,8 +35,6 @@ namespace {
             errs() << "#### " << F.getName() << "(..)\n" ;
             errs() << "##############################\n" ;
             LLVMContext& context = F.getContext() ;
-            bool did_change = false ; 
-            bool first = true ;
             
             // push the canary
             BasicBlock &B = F.getEntryBlock() ;
@@ -57,6 +55,7 @@ namespace {
                     break ;
                 }
             }
+            // p_inst_right_before_ret->eraseFromParent();
             // p_inst_right_before_ret = &*(--function_back) ;
             // errs() << p_inst_right_before_ret->getOpcodeName() << "\n"; 
             
@@ -70,7 +69,6 @@ namespace {
             
 
             // For DEBUG : print IRs
-            Value* canary_itself = push_canary->getPointerOperand();
             for (inst_iterator it = inst_begin(F), E= inst_end(F); it != E; ++it)
                   errs() << *it << "\n";
             
