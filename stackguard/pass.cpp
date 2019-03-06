@@ -41,19 +41,36 @@ namespace {
             // push the canary
             BasicBlock &B = F.getEntryBlock() ;
             Instruction *pi = B.getFirstNonPHI();
-            IRBuilder<> builder(pi) ;
-            ConstantInt* canary_cast = ConstantInt::get(IntegerType::getInt64Ty(context), canary);
-            AllocaInst* alloca_canary = builder.CreateAlloca(IntegerType::getInt64Ty(context));
-            StoreInst* push_canary   = builder.CreateStore(canary_cast, alloca_canary);
-            
+            IRBuilder<> proloque_builder(pi) ;
+            ConstantInt* canary_const = ConstantInt::get(IntegerType::getInt64Ty(context), canary);
+            AllocaInst* alloca_canary_inst = proloque_builder.CreateAlloca(IntegerType::getInt64Ty(context));
+            StoreInst* push_canary_inst   = proloque_builder.CreateStore(canary_const, alloca_canary_inst);
+
             // check : unfinished ...
-            inst_iterator function_back = inst_end(F);
-            --function_back ;
-            Instruction &last_inst = *function_back ;
-            errs() << last_inst.getOpcodeName() << "\n"; 
+            inst_iterator function_back = (--inst_end(F));
+            Instruction *p_inst_right_before_ret = &*function_back;
+            
+            while ( !isa<ReturnInst>(p_inst_right_before_ret) ) {
+                --function_back ; 
+                p_inst_right_before_ret = &*function_back ;
+                if ( function_back == inst_begin(F) ) {
+                    break ;
+                }
+            }
+            // p_inst_right_before_ret = &*(--function_back) ;
+            // errs() << p_inst_right_before_ret->getOpcodeName() << "\n"; 
+            
+            // BasicBlock *pb = dyn_cast<BasicBlock>(p_inst_right_before_ret);
+            
+            IRBuilder<> epiloque_builder(p_inst_right_before_ret) ;
+            // Value* l = dyn_cast<Value>(canary_cast) ;  // not gonna solve the problem
+            LoadInst* load_canary_inst = epiloque_builder.CreateLoad(IntegerType::getInt64Ty(context), alloca_canary_inst);
+            epiloque_builder.CreateICmpEQ(load_canary_inst, canary_const);
+                       
+            
 
-
-            // print IRs
+            // For DEBUG : print IRs
+            Value* canary_itself = push_canary->getPointerOperand();
             for (inst_iterator it = inst_begin(F), E= inst_end(F); it != E; ++it)
                   errs() << *it << "\n";
             
