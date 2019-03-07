@@ -1,4 +1,5 @@
 #include "llvm/Pass.h"
+#include "llvm/IR/Module.h"
 #include "llvm/IR/Function.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/Instruction.h"
@@ -55,20 +56,40 @@ namespace {
                     break ;
                 }
             }
-            // p_inst_right_before_ret->eraseFromParent();
-            // p_inst_right_before_ret = &*(--function_back) ;
-            // errs() << p_inst_right_before_ret->getOpcodeName() << "\n"; 
+            // Now that
+            //                              load xxxxxx
+            //                    p_inst -> ret i32....
+            //
+
+            // to-do : create end_block 
+            BasicBlock* bb = p_inst_right_before_ret->getParent();
+            // to-do : create fail_block
+            BasicBlock* check_bb= bb->splitBasicBlock(p_inst_right_before_ret, "check_bb");
+            BasicBlock* stack_chk_fail_bb= check_bb->splitBasicBlock(p_inst_right_before_ret, "stack_chk_fail_bb");
+            BasicBlock* ret_bb= stack_chk_fail_bb->splitBasicBlock(p_inst_right_before_ret, "ret_bb");
             
-            // BasicBlock *pb = dyn_cast<BasicBlock>(p_inst_right_before_ret);
+            bb->getTerminator()->eraseFromParent();
+             
             
-            IRBuilder<> epiloque_builder(p_inst_right_before_ret) ;
-            // Value* l = dyn_cast<Value>(canary_cast) ;  // not gonna solve the problem
-            LoadInst* load_canary_inst = epiloque_builder.CreateLoad(IntegerType::getInt64Ty(context), alloca_canary_inst);
-            epiloque_builder.CreateICmpEQ(load_canary_inst, canary_const);
-                       
+            
+            IRBuilder<> check_bb_builder(bb);
+            LoadInst* load_canary_inst = check_bb_builder.CreateLoad(IntegerType::getInt64Ty(context), push_canary_inst->getPointerOperand());
+            check_bb->getTerminator()->eraseFromParent();
+            Value* canary_cmp = check_bb_builder.CreateICmpEQ(load_canary_inst, canary_const);
+            check_bb_builder.CreateCondBr(canary_cmp, ret_bb, check_bb);
+
+            
+            IRBuilder<> stack_chk_fail_bb_builder(check_bb) ;
+            // stack_chk_fail_bb_builder.CreateLoad(alloca_canary_inst);
+            Value* exit = F.getParent()->getOrInsertFunction("exit", Type::getVoidTy(context));
+            ConstantInt* one = ConstantInt::get(IntegerType::getInt64Ty(context), 1);
+            ArrayRef<Value *> argsV(one);
+            
+            CallInst* call_exit = stack_chk_fail_bb_builder.CreateCall(exit, argsV); 
+            stack_chk_fail_bb_builder.CreateUnreachable();
             
 
-            // For DEBUG : print IRs
+            // For DEBUG : print IRs 
             for (inst_iterator it = inst_begin(F), E= inst_end(F); it != E; ++it)
                   errs() << *it << "\n";
             

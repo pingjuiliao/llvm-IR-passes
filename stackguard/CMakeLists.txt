@@ -12,6 +12,7 @@ SET(MAIN_SRC ${MAIN}.in)
 SET(COMPILE_SCRIPT  compile.sh)
 SET(COMPILE_SCRIPT_SRC ${COMPILE_SCRIPT}.in)
 
+
 ## copy *.c script
 configure_file (
     "${PROJECT_SOURCE_DIR}/${MAIN_SRC}"
