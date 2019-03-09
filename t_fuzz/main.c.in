@@ -7,6 +7,7 @@
 char gbuf[32];
 void strcmp_check(void);
 void int32_check(void);
+void biggerthan_check(void);
 void vuln(void);
 
 int
@@ -16,11 +17,23 @@ main( int argc, char** argv) {
     
     strcmp_check();
     int32_check();
+    biggerthan_check();
     vuln();
 
 
 
     return 0;
+}
+void
+strcmp_check(void) {
+    char buf[8];
+    read(0, buf, sizeof(buf)-1);
+    buf[sizeof(buf)-1] = '\0';
+    if ( strcmp(buf, "pingjui") != 0 ) {
+        fprintf(stderr, "strcmp_check failed\n");
+        exit(1);
+    } 
+    return ;
 }
 
 void 
@@ -34,17 +47,23 @@ int32_check(void) {
     return ;
 }
 
+
 void
-strcmp_check(void) {
-    char buf[8];
-    read(0, buf, sizeof(buf)-1);
-    buf[sizeof(buf)-1] = '\0';
-    if ( strcmp(buf, "pingjui") != 0 ) {
-        fprintf(stderr, "strcmp_check failed");
+biggerthan_check(void) {
+    char int_buf[10] ;
+    int i ;
+    read(0, &int_buf, sizeof(int_buf));
+    int_buf[sizeof(int_buf)-1] = '\0';
+    i = atoi(int_buf);
+    if ( i > 0 ) {
+        fprintf(stderr, "biggerthan_check failed\n");
         exit(1);
-    } 
+    }
+
     return ;
 }
+
+
 
 void
 vuln(void) {

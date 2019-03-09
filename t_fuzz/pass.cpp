@@ -23,9 +23,18 @@ namespace {
                 
             // catch br 
             Instruction* termi_pi = B.getTerminator();
-            if ( auto br_pi = dyn_cast<BranchInst>(termi_pi) ) {
-                br_pi->swapSuccessors();  
             
+            if ( BranchInst *br_pi = dyn_cast<BranchInst>(termi_pi) ) {
+                if ( br_pi->isUnconditional() ) {
+                    return false ;
+                }
+                // catch condition !
+                Value* v = br_pi->getCondition();
+                if ( CmpInst *cmp_pi = dyn_cast<CmpInst>(v) ) {
+                    if ( cmp_pi->isEquality() ) {
+                        br_pi->swapSuccessors(); // amazing magic  
+                    }
+                }
             }
 
 

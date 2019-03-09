@@ -6,10 +6,11 @@
 ###### This implementation is without isolation, it only pushes constant on the stack 
 
 ### t_fuzz     : change the branch condition so that the 
-###### This implementation reverse all branch
+###### This implementation reverse jne/je 
+###### possible limitation: the branch is not followed by CmpInst in IR state .
 
 ### cmp_reduce : change multibytes comparason to byte-by-byte comparason
-###### On progress 
+###### This
 
 
 ## To build new pass project
