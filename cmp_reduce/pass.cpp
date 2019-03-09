@@ -92,10 +92,11 @@ namespace {
                 for ( unsigned i = 0 ; i < size ; ++i ) {
                     BasicBlock *next_bb = bb->splitBasicBlock(cmp_pi);
                     IRBuilder<> builder(bb);
-                    LoadInst* aligned_load = builder.CreateAlignedLoad(IntegerType::getInt8Ty(context), user_input, i+1) ;
-                    
+                    // TO DO : create pointer ~~~!!!!!
+                    LoadInst* aligned_load = builder.CreateAlignedLoad(user_input, 1) ;
+                    errs() << i << "\n"; 
                     uint8_t compared_uint8 = (uint8_t) (( magic_value_uint >> (i * 8) ) & 0xff ); 
-                    ConstantInt* compared_const = ConstantInt::get(IntegerType::getInt8Ty(context), compared_uint8) ;
+                    ConstantInt* compared_const = ConstantInt::get(IntegerType::getInt8Ty(context), 1) ;
                     Value* new_cmp_inst = builder.CreateICmpEQ(aligned_load, compared_const);
                     BranchInst* new_br_inst = builder.CreateCondBr(new_cmp_inst, br_pi->getSuccessor(0), br_pi->getSuccessor(1));
                     bb = next_bb ;
