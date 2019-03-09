@@ -8,13 +8,13 @@
 #include "llvm/IR/InstIterator.h"
 using namespace llvm;
 
-// Project Name : CmpReduce
+// Project Name : TFuzz
 //   (replace this with your NewProjectName )
 
 namespace {
-    struct CmpReducePass : public BasicBlockPass {
+    struct TFuzzPass : public BasicBlockPass {
         static char ID ;
-        CmpReducePass() : BasicBlockPass(ID) {}
+        TFuzzPass() : BasicBlockPass(ID) {}
 
         virtual bool runOnBasicBlock(BasicBlock &B) {
             errs() << "\n\n#########################\n" ;
@@ -56,11 +56,11 @@ namespace {
     };
 }
 
-char CmpReducePass::ID = 0;
+char TFuzzPass::ID = 0;
 
 static void
-registerCmpReducePass(const PassManagerBuilder &, legacy::PassManagerBase &PM) {
-    PM.add(new CmpReducePass());
+registerTFuzzPass(const PassManagerBuilder &, legacy::PassManagerBase &PM) {
+    PM.add(new TFuzzPass());
 }
 static RegisterStandardPasses
-RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerCmpReducePass);
+RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerTFuzzPass);
