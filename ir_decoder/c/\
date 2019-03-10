@@ -1,0 +1,15 @@
+#include<stdio.h>
+#include<stdint.h>
+
+int
+main(void) {
+    uint32_t v = 0x41424344 ;
+    int i ;
+    char c ;
+    for ( i = 0 ; i < 4 ; ++i ) {
+        c = ((char *) v + i) ;
+        printf("%c -", c) ;
+    }
+    puts(" is the integer presented byte by byte");
+    return 0 ;
+}

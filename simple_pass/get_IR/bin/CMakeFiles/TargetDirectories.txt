@@ -1,0 +1,4 @@
+/home/pingjui/llvm/simple_pass/get_IR/bin/CMakeFiles/rebuild_cache.dir
+/home/pingjui/llvm/simple_pass/get_IR/bin/CMakeFiles/edit_cache.dir
+/home/pingjui/llvm/simple_pass/get_IR/bin/CMakeFiles/intrinsics_gen.dir
+/home/pingjui/llvm/simple_pass/get_IR/bin/CMakeFiles/LLVMget_IR.dir

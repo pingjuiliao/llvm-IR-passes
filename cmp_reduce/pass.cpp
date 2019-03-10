@@ -27,7 +27,6 @@ namespace {
         CmpReducePass() : BasicBlockPass(ID) {}
 
         virtual bool runOnBasicBlock(BasicBlock &B) {
-                
             LLVMContext& context = B.getContext();
             // catch br 
             Instruction* termi_pi = B.getTerminator();
@@ -35,8 +34,10 @@ namespace {
             CmpInst* cmp_pi ;
             if ( !( br_pi = dyn_cast<BranchInst>(termi_pi) ) )  
                 return false ;
+
             if ( br_pi->isUnconditional() ) 
                 return false ;
+
 
             Value* cond = br_pi->getCondition() ;
             if ( !( cmp_pi = dyn_cast<CmpInst>(cond)) ) 
@@ -45,9 +46,6 @@ namespace {
             if ( !cmp_pi->isEquality() )
                 return false ;
 
-            errs() << "\n\n#########################\n" ;
-            errs() << "###  Basic Block \n";
-            errs() << "#########################\n" ;
                
             // backtrace the cmp    
             CallInst* str_cmp_inst = NULL ;
@@ -70,15 +68,23 @@ namespace {
                     return false ;
                 }
             }
+           
+            // get Successor
+             
+            BasicBlock* value_match_successor = br_pi->getSuccessor(0) ; 
+            BasicBlock* value_not_match_successor = br_pi->getSuccessor(1) ;
+            if ( cmp_pi->isFalseWhenEqual() ) {
+                BasicBlock *tmp = value_match_successor ;
+                value_match_successor = value_not_match_successor  ;
+                value_not_match_successor = tmp ;
+            }
             
             // if we got here, the codes must be changed
-            //
 
             // Magic Value
             if ( load_inst && magic_value ) {
                 // Magic Value case
-                
-                
+                // magic_value v.s. user_input
                 // to-do get original comparason data
                 Value* user_input = load_inst->getPointerOperand();
                 // to-do determine size
@@ -86,42 +92,78 @@ namespace {
                 if ( size < 4 ) {
                     return false ;
                 }
-                uint64_t magic_value_uint = magic_value->getValue().getLimitedValue();
+                uint32_t magic_value_uint = magic_value->getValue().getLimitedValue();
                 // to-do create blocks
                 BasicBlock *bb = cmp_pi->getParent();
-                for ( unsigned i = 0 ; i < size ; ++i ) {
+                for ( uint32_t i = 0 ; i < size ; ++i ) {
+                    
                     BasicBlock *next_bb = bb->splitBasicBlock(cmp_pi);
-                    IRBuilder<> builder(bb);
+                    
+                    IRBuilder<> builder(bb->getTerminator());
+                    
                     // TO DO : create pointer ~~~!!!!!
-                    LoadInst* aligned_load = builder.CreateAlignedLoad(user_input, 1) ;
-                    errs() << i << "\n"; 
-                    uint8_t compared_uint8 = (uint8_t) (( magic_value_uint >> (i * 8) ) & 0xff ); 
-                    ConstantInt* compared_const = ConstantInt::get(IntegerType::getInt8Ty(context), 1) ;
-                    Value* new_cmp_inst = builder.CreateICmpEQ(aligned_load, compared_const);
-                    BranchInst* new_br_inst = builder.CreateCondBr(new_cmp_inst, br_pi->getSuccessor(0), br_pi->getSuccessor(1));
+                    // LoadInst* aligned_load = builder.CreateAlignedLoad(user_input, 1) ;
+                    // uint8_t compared_uint8 = (uint8_t) (( magic_value_uint >> (i * 8) ) & 0xff ); 
+                    // ConstantInt* compared_const = ConstantInt::get(IntegerType::getInt8Ty(context), 1) ;
+                    // Value* new_cmp_inst = builder.CreateICmpEQ(aligned_load, compared_const);
+                   
+                    // bitcast
+                    Value* bitcast_inst = builder.CreateBitCast(user_input, PointerType::getUnqual(IntegerType::getInt8Ty(context)));
+                    // getelementptr
+                    ConstantInt* const_i = ConstantInt::get(IntegerType::getInt64Ty(context), i) ;
+                    Value* gep_inst = builder.CreateInBoundsGEP(IntegerType::getInt8Ty(context), bitcast_inst, const_i) ;
+                    // load
+                    LoadInst* load_i8_inst = builder.CreateAlignedLoad(gep_inst, size) ;
+                    
+                    // sext
+                    Value* sext_inst = builder.CreateSExt(load_i8_inst, IntegerType::getInt32Ty(context));
+                    
+                    // ICmp
+                    uint32_t magic_i8 = ( magic_value_uint >> (i * 8) ) & 0xff  ;
+                    ConstantInt* const_magic_i8 = ConstantInt::get(IntegerType::getInt32Ty(context), magic_i8) ; 
+                    Value* new_cmp_inst = builder.CreateICmpEQ(sext_inst , const_magic_i8);
+
+
+                    // branch !
+                    BranchInst* new_br_inst ; 
+                    if ( i == size-1 ) {
+                        new_br_inst = builder.CreateCondBr(new_cmp_inst, value_match_successor, value_not_match_successor);
+                        // new_br_inst = builder.CreateBr(br_pi->getSuccessor(0));
+                    } else {
+                        // new_br_inst = builder.CreateBr(next_bb);
+                        new_br_inst = builder.CreateCondBr(new_cmp_inst, next_bb, value_not_match_successor);
+
+                    }
+                    bb->getTerminator()->eraseFromParent();
+
                     bb = next_bb ;
+                    
                 }
-                // to-do delete original
-                // cmp_inst->eraseFromParent();
-                // br_inst->eraseFromParent();
                 
+                // to-do delete original
+                IRBuilder<> end_builder(cmp_pi);
+                end_builder.CreateUnreachable();
+                
+                cmp_pi->eraseFromParent();
+                br_pi->eraseFromParent();
+
             } 
-            
             
             // strcmp case !
             if ( str_cmp_inst && magic_value && magic_value->getValue() == 0) {
                 errs() << "strcmp case\n" ;
             
             }
-            
-            
             // Debug : show IRs
             errs() << "\n\n" ;
-            
-            for (auto &I : B) {
-                I.print(errs());
-                errs() << "\n" ;
+            Function* F = B.getParent() ;
+            errs() << "################################\n" ;
+            errs() << "####" << F->getName() << "\n" ;
+            errs() << "################################\n" ;
+            for (inst_iterator it = inst_begin(F), E= inst_end(F); it != E ; ++it ) {
+                errs() << *it << "\n" ;
             }
+
             return true ;
         }
     };
