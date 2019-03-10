@@ -10,7 +10,9 @@
 ###### possible limitation: the branch is not followed by CmpInst in IR state .
 
 ### cmp_reduce : change multibytes comparason to byte-by-byte comparason
-###### This
+###### Now support : Magic value detection
+###### On development : strcmp, strncmp
+
 
 
 ## To build new pass project
