@@ -27,7 +27,7 @@ void
 int32_check(void) {
     uint32_t n ;
     read(0, &n, sizeof(uint32_t));
-    if ( n != 0x41414141 ) {
+    if ( n != 0x41424344 ) {
         fprintf(stderr, "Your n == %08x int32_check failed\n", n);
         exit(1);
     }
