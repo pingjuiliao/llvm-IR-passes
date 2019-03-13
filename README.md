@@ -1,18 +1,12 @@
 # My LLVM pass projects
 
-## The projects I built
-
-### Stackguard : Stack canary
-###### This implementation is without isolation, it only pushes constant on the stack 
-###### 
-
-### t_fuzz     : change the branch condition so that the 
-###### This implementation reverse jne/je 
-###### possible limitation: the branch is not followed by CmpInst in IR state .
-
-### cmp_reduce : change multibytes comparason to byte-by-byte comparason
-###### Now support : Magic value detection
-###### On development : strcmp, strncmp
+## Projects I built
+| Project    | Description                                            |       status       |
+|------------|--------------------------------------------------------|--------------------|
+| Stackguard | mimic stackguard                                       | only push constant |
+| T-fuzz     | mimic T-fuzz                                           | flip the branch    |
+| Cmp reduce | divide n-bytes comparason into byte-by-byte comparason | int32 cmp completed|
+| -----------| -----------------|
 
 
 
