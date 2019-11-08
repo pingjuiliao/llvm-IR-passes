@@ -46,8 +46,10 @@ CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llv
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Function.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/GlobalObject.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/GlobalValue.h
+CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/InstrTypes.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Instruction.def
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Instruction.h
+CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Instructions.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/LLVMContext.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/LegacyPassManager.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Metadata.def
@@ -69,6 +71,7 @@ CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llv
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/AlignOf.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/Allocator.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/Atomic.h
+CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/AtomicOrdering.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/CBindingWrapping.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/Casting.h
 CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/CommandLine.h

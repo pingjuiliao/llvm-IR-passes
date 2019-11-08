@@ -47,8 +47,10 @@ CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o
  /usr/lib/llvm-6.0/include/llvm/IR/Function.h
  /usr/lib/llvm-6.0/include/llvm/IR/GlobalObject.h
  /usr/lib/llvm-6.0/include/llvm/IR/GlobalValue.h
+ /usr/lib/llvm-6.0/include/llvm/IR/InstrTypes.h
  /usr/lib/llvm-6.0/include/llvm/IR/Instruction.def
  /usr/lib/llvm-6.0/include/llvm/IR/Instruction.h
+ /usr/lib/llvm-6.0/include/llvm/IR/Instructions.h
  /usr/lib/llvm-6.0/include/llvm/IR/LLVMContext.h
  /usr/lib/llvm-6.0/include/llvm/IR/LegacyPassManager.h
  /usr/lib/llvm-6.0/include/llvm/IR/Metadata.def
@@ -70,6 +72,7 @@ CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o
  /usr/lib/llvm-6.0/include/llvm/Support/AlignOf.h
  /usr/lib/llvm-6.0/include/llvm/Support/Allocator.h
  /usr/lib/llvm-6.0/include/llvm/Support/Atomic.h
+ /usr/lib/llvm-6.0/include/llvm/Support/AtomicOrdering.h
  /usr/lib/llvm-6.0/include/llvm/Support/CBindingWrapping.h
  /usr/lib/llvm-6.0/include/llvm/Support/Casting.h
  /usr/lib/llvm-6.0/include/llvm/Support/CommandLine.h
