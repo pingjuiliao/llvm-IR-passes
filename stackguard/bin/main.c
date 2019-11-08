@@ -9,7 +9,9 @@ void vuln(void);
 
 int
 main( int argc, char** argv) {
+    puts("hello");
     vuln();
+    puts("bye") ;
     return 0;
 }
 
