@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC   -shared  -o libLLVMafl-llvm.so CMakeFiles/LLVMafl-llvm.dir/pass.cpp.o  -L/usr/lib/llvm-6.0/include 

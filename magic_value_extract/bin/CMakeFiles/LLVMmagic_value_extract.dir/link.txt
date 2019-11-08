@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC   -shared  -o libLLVMmagic_value_extract.so CMakeFiles/LLVMmagic_value_extract.dir/pass.cpp.o  -L/usr/lib/llvm-6.0/include 
