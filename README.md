@@ -1,12 +1,17 @@
 # My LLVM pass projects
 
 ## Projects I built
-|    Project    | Description                                            |       status       |
-|---------------|--------------------------------------------------------|--------------------|
-|  [StackGuard] | mimic stackguard                                       | only push constant |
-|   [T-fuzz]    | mimic T-fuzz                                           | flip the branch    |
-|  [Cmp reduce] | divide n-bytes comparason into byte-by-byte comparason | int32 cmp completed|
+### binary instrumentation
+|    Project             | Description                                            |       status       |
+|------------------------|--------------------------------------------------------|--------------------|
+|  [StackGuard]          | mimic stackguard                                       | only push constant |
+|   [T-fuzz]             | mimic T-fuzz                                           | flip the branch    |
+|  [Cmp reduce]          | divide n-bytes comparason into byte-by-byte comparason | int32 cmp completed|
 
+### program analysis
+|    Project             | Description                                            |       status       |
+|------------------------|--------------------------------------------------------|--------------------|
+| [Magic Value Analysis] | monitor cmp instruction to get magic bytes             | Equality handled() |
 
 
 ## To build new pass project
@@ -26,6 +31,6 @@
 ```
 
 
-[StackGuard]: https://github.com/pingjuiliao/llvm/tree/master/stackguard
-[T-fuzz]: https://github.com/pingjuiliao/llvm/tree/master/t_fuzz
-[Cmp reduce]: https://github.com/pingjuiliao/llvm/tree/master/cmp_reduce
+[StackGuard]: /stackguard
+[T-fuzz]: /t_fuzz
+[Cmp reduce]: /cmp_reduce
