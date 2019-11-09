@@ -151,7 +151,7 @@ namespace {
             
             // strcmp case !
             if ( str_cmp_inst && magic_value && magic_value->getValue() == 0) {
-                errs() << "strcmp case\n" ;
+                errs() << "strcmp cases\n" ;
             
             }
             // Debug : show IRs

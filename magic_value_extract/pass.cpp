@@ -1,24 +1,36 @@
 #include "llvm/Pass.h"
+#include "llvm/IR/Module.h"
 #include "llvm/IR/Function.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/User.h"
-#include "llvm/IR/Type.h"
-#include "llvm/IR/InstrTypes.h"
 
+#include "llvm/IR/LLVMContext.h"
+
+#include "llvm/IR/InstrTypes.h"
+#include "llvm/IR/Type.h"
+#include "llvm/IR/DerivedTypes.h"
+#include "llvm/ADT/ilist.h"
 #include "llvm/Support/raw_ostream.h"
+
+#include "llvm/IR/IRBuilder.h"
+#include "llvm/IR/InstIterator.h"
+
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Transforms/IPO/PassManagerBuilder.h"
 #include <vector>
+#include <stdint.h>
 using namespace llvm;
 
 
 // Project Name : MagicValueExtract
 //   (replace this with your NewProjectName )
 
+
 namespace {
     struct MagicValueExtractPass : public BasicBlockPass {
         static char ID ;
+        std::vector<std::pair<uint32_t, uint64_t>> magics;
         MagicValueExtractPass() : BasicBlockPass(ID) {}
 
         virtual bool runOnBasicBlock(BasicBlock &B) {
@@ -36,31 +48,43 @@ namespace {
             errs() << "## Here's another basic block \n" ;
             errs() << "##############################\n" ;
             
-            Value* condition_pi ;
+            CmpInst* condition_pi ;
             if ( !( condition_pi = dyn_cast<CmpInst>(br_pi->getCondition())) ) {
                 return false ;
             }
             
             errs() << "\n====================\n" ;
             condition_pi->print(errs()) ;
-            
-            // predicate
-            // Predicate predicate = condition_pi->getPredicate() ;
-            
-            // operands
-            Value* op0 = condition_pi->getOperand(0) ;
-            Value* op1 = condition_pi->getOperand(1) ;
-            op0->print(errs()) ;
-            op1->print(errs()) ;
+            for ( int i = 0 ; i < 2 ; ++i ) {
+                Value* op = condition_pi->getOperand(i) ;
+                if ( auto c = dyn_cast<Constant>(op) ) {
+                    unsigned size = op->getType()->getPrimitiveSizeInBits() ;
+                    errs() << "\nsize == "<< size << "\n\n" ;
+                    uint64_t value = 0;
+                    if ( auto cint = dyn_cast<ConstantInt>(c) ) {
+                        value = cint->getValue().getLimitedValue();
+                    //} else if ( auto cfp = dyn_cast<ConstantFP>(c) ) {
+                    //    auto value = cfp->getValueAPF(); 
+                    }
+                    if ( value != 0 ) {
+                        magics.push_back(std::make_pair(size, value));
+                    }
+                }
+            }
 
             errs() << "\n====================\n" ;
-
-            for ( BasicBlock::reverse_iterator it = B.rbegin() ; it != B.rend() ; ++ it) {
-                errs() << *it << "\n" ;
-
-            }
+            
             return false ;
         }
+        virtual bool doFinalization(Module& M) {
+            errs() << "\n";
+            for ( auto it: magics ) {
+                errs() << " # Size == " << it.first << ", Value == 0x";
+                errs().write_hex(it.second) ;
+                errs() << "\n" ;
+            }
+        }
+    
     };
 }
 
