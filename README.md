@@ -34,3 +34,4 @@
 [StackGuard]: /stackguard
 [T-fuzz]: /t_fuzz
 [Cmp reduce]: /cmp_reduce
+[Magic Value Analysis]: /magic_value_extract
