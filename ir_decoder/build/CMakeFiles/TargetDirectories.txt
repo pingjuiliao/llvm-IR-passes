@@ -1,0 +1,4 @@
+/home/pingjui/llvm/ir_decoder/bin/CMakeFiles/rebuild_cache.dir
+/home/pingjui/llvm/ir_decoder/bin/CMakeFiles/edit_cache.dir
+/home/pingjui/llvm/ir_decoder/bin/CMakeFiles/intrinsics_gen.dir
+/home/pingjui/llvm/ir_decoder/bin/CMakeFiles/LLVMir_decoder.dir
