@@ -7,10 +7,9 @@
 
 #include "llvm/IR/LLVMContext.h"
 
-#include "llvm/IR/InstrTypes.h"
 #include "llvm/IR/Type.h"
+#include "llvm/IR/InstrTypes.h"
 #include "llvm/IR/DerivedTypes.h"
-#include "llvm/ADT/ilist.h"
 #include "llvm/Support/raw_ostream.h"
 
 #include "llvm/IR/IRBuilder.h"
@@ -53,6 +52,7 @@ namespace {
                 return false ;
             }
             
+
             errs() << "\n====================\n" ;
             condition_pi->print(errs()) ;
             for ( int i = 0 ; i < 2 ; ++i ) {
@@ -66,7 +66,7 @@ namespace {
                     //} else if ( auto cfp = dyn_cast<ConstantFP>(c) ) {
                     //    auto value = cfp->getValueAPF(); 
                     }
-                    if ( value != 0 ) {
+                    if ( value != 0 && condition_pi->isEquality() ) {
                         magics.push_back(std::make_pair(size, value));
                     }
                 }

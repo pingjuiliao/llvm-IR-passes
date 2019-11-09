@@ -21,14 +21,12 @@ llvm/IR/User.h
 /home/pingjui/llvm/magic_value_extract/llvm/IR/User.h
 llvm/IR/LLVMContext.h
 /home/pingjui/llvm/magic_value_extract/llvm/IR/LLVMContext.h
-llvm/IR/InstrTypes.h
-/home/pingjui/llvm/magic_value_extract/llvm/IR/InstrTypes.h
 llvm/IR/Type.h
 /home/pingjui/llvm/magic_value_extract/llvm/IR/Type.h
+llvm/IR/InstrTypes.h
+/home/pingjui/llvm/magic_value_extract/llvm/IR/InstrTypes.h
 llvm/IR/DerivedTypes.h
 /home/pingjui/llvm/magic_value_extract/llvm/IR/DerivedTypes.h
-llvm/ADT/ilist.h
-/home/pingjui/llvm/magic_value_extract/llvm/ADT/ilist.h
 llvm/Support/raw_ostream.h
 /home/pingjui/llvm/magic_value_extract/llvm/Support/raw_ostream.h
 llvm/IR/IRBuilder.h

@@ -9,8 +9,9 @@ one_byte_cmp(char* input) {
     if ( input[3] == 'a' )
         if ( input[2] == 'b' )
             if ( input[1] == 'c' )
-                if ( input[0] == 'a' )
+                if ( input[0] == 'd' )
                     return ;
+    puts("one byte cmp failed");
     exit(1) ;
 }
 void 
@@ -19,6 +20,7 @@ two_byte_cmp(char* input) {
     uint16_t y = *((uint16_t *) (input +2));
     if ( x == 0x4141 && y == 0x4242 )
         return ;
+    puts("two byte cmp failed");
     exit(1) ;
 } 
 
@@ -27,6 +29,7 @@ four_byte_cmp(char* input) {
     uint32_t x = *((uint32_t *) input) ;
     if ( x == 0x68732f6e )
         return ;
+    puts("four byte cmp failed");
     exit(1) ;
 }
 
@@ -35,6 +38,7 @@ eight_byte_cmp(char* input) {
     uint64_t x = *((uint64_t *) input) ;
     if ( x == 0x00c01db7e3c0ffee )
         return ;
+    puts("eight_byte_cmp failed");
     exit(1) ;
 }
 
