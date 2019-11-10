@@ -11,7 +11,9 @@
 ### program analysis
 |    Project             | Description                                            |       status       |
 |------------------------|--------------------------------------------------------|--------------------|
-| [Magic Value Analysis] | monitor cmp instruction to get magic bytes             | Equality handled() |
+| [Magic Value Analysis] | track   cmp instruction to get magic bytes             | Equality handled() |
+| [LEA Analysis]         | track if lea instruction is tainted                    | Might-alias level  |
+
 
 
 ## To build new pass project
@@ -35,3 +37,4 @@
 [T-fuzz]: /t_fuzz
 [Cmp reduce]: /cmp_reduce
 [Magic Value Analysis]: /magic_value_extract
+[LEA Analysis]: /lea_analysis
