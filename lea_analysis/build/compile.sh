@@ -1,6 +1,6 @@
 #!/bin/bash
 if [[ $1 == "" ]] ; then
-	clang -Xclang -load -Xclang ./libLLVMeffective_address_analysis.so main.c
+	clang -Xclang -load -Xclang ./libLLVMlea_analysis.so main.c
 else
-	clang -Xclang -load -Xclang ./libLLVMeffective_address_analysis.so $1
+	clang -Xclang -load -Xclang ./libLLVMlea_analysis.so $1
 fi

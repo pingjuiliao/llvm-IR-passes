@@ -7,13 +7,13 @@
 #include <vector>
 using namespace llvm;
 
-// Project Name : EffectiveAddressAnalysis
+// Project Name : LeaAnalysis
 //   (replace this with your NewProjectName )
 
 namespace {
-    struct EffectiveAddressAnalysisPass : public FunctionPass {
+    struct LeaAnalysisPass : public FunctionPass {
         static char ID ;
-        EffectiveAddressAnalysisPass() : FunctionPass(ID) {}
+        LeaAnalysisPass() : FunctionPass(ID) {}
 
         virtual bool runOnFunction(Function &F) {
             // get all lea
@@ -70,11 +70,11 @@ namespace {
     };
 }
 
-char EffectiveAddressAnalysisPass::ID = 0;
+char LeaAnalysisPass::ID = 0;
 
 static void
-registerEffectiveAddressAnalysisPass(const PassManagerBuilder &, legacy::PassManagerBase &PM) {
-    PM.add(new EffectiveAddressAnalysisPass());
+registerLeaAnalysisPass(const PassManagerBuilder &, legacy::PassManagerBase &PM) {
+    PM.add(new LeaAnalysisPass());
 }
 static RegisterStandardPasses
-RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerEffectiveAddressAnalysisPass);
+RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerLeaAnalysisPass);

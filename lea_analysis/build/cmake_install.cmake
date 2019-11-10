@@ -1,4 +1,4 @@
-# Install script for directory: /home/pingjui/llvm/effective_address_analysis
+# Install script for directory: /home/pingjui/llvm/lea_analysis
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/pingjui/llvm/effective_address_analysis/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/pingjui/llvm/lea_analysis/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

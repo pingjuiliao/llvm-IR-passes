@@ -11,14 +11,16 @@
 ### program analysis
 |    Project             | Description                                            |       status       |
 |------------------------|--------------------------------------------------------|--------------------|
-| [Magic Value Analysis] | track   cmp instruction to get magic bytes             | Equality handled() |
-| [LEA Analysis]         | track if lea instruction is tainted                    | Might-alias level  |
+| [Magic Value Analysis] | monitor cmp instructions to get magic bytes (VUzzer)   | Equality handled() |
+| [LEA Analysis]         | monitor lea instructions & check if tainted (VUzzer)   | Might-alias level  |
+
 
 
 
 
 
 ## Recap for myself
+
 ### To build new pass project
 ```
     $ cp -r ./template ./new_llvm_pass_project

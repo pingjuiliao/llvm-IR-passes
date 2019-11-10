@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pingjui/llvm/effective_address_analysis
+CMAKE_SOURCE_DIR = /home/pingjui/llvm/lea_analysis
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pingjui/llvm/effective_address_analysis/build
+CMAKE_BINARY_DIR = /home/pingjui/llvm/lea_analysis/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/effective_address_analysis/build/CMakeFiles /home/pingjui/llvm/effective_address_analysis/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/lea_analysis/build/CMakeFiles /home/pingjui/llvm/lea_analysis/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/effective_address_analysis/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/lea_analysis/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -124,17 +124,17 @@ intrinsics_gen/fast:
 .PHONY : intrinsics_gen/fast
 
 #=============================================================================
-# Target rules for targets named LLVMeffective_address_analysis
+# Target rules for targets named LLVMlea_analysis
 
 # Build rule for target.
-LLVMeffective_address_analysis: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 LLVMeffective_address_analysis
-.PHONY : LLVMeffective_address_analysis
+LLVMlea_analysis: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 LLVMlea_analysis
+.PHONY : LLVMlea_analysis
 
 # fast build rule for target.
-LLVMeffective_address_analysis/fast:
-	$(MAKE) -f CMakeFiles/LLVMeffective_address_analysis.dir/build.make CMakeFiles/LLVMeffective_address_analysis.dir/build
-.PHONY : LLVMeffective_address_analysis/fast
+LLVMlea_analysis/fast:
+	$(MAKE) -f CMakeFiles/LLVMlea_analysis.dir/build.make CMakeFiles/LLVMlea_analysis.dir/build
+.PHONY : LLVMlea_analysis/fast
 
 pass.o: pass.cpp.o
 
@@ -142,7 +142,7 @@ pass.o: pass.cpp.o
 
 # target to build an object file
 pass.cpp.o:
-	$(MAKE) -f CMakeFiles/LLVMeffective_address_analysis.dir/build.make CMakeFiles/LLVMeffective_address_analysis.dir/pass.cpp.o
+	$(MAKE) -f CMakeFiles/LLVMlea_analysis.dir/build.make CMakeFiles/LLVMlea_analysis.dir/pass.cpp.o
 .PHONY : pass.cpp.o
 
 pass.i: pass.cpp.i
@@ -151,7 +151,7 @@ pass.i: pass.cpp.i
 
 # target to preprocess a source file
 pass.cpp.i:
-	$(MAKE) -f CMakeFiles/LLVMeffective_address_analysis.dir/build.make CMakeFiles/LLVMeffective_address_analysis.dir/pass.cpp.i
+	$(MAKE) -f CMakeFiles/LLVMlea_analysis.dir/build.make CMakeFiles/LLVMlea_analysis.dir/pass.cpp.i
 .PHONY : pass.cpp.i
 
 pass.s: pass.cpp.s
@@ -160,7 +160,7 @@ pass.s: pass.cpp.s
 
 # target to generate assembly for a file
 pass.cpp.s:
-	$(MAKE) -f CMakeFiles/LLVMeffective_address_analysis.dir/build.make CMakeFiles/LLVMeffective_address_analysis.dir/pass.cpp.s
+	$(MAKE) -f CMakeFiles/LLVMlea_analysis.dir/build.make CMakeFiles/LLVMlea_analysis.dir/pass.cpp.s
 .PHONY : pass.cpp.s
 
 # Help Target
@@ -172,7 +172,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... intrinsics_gen"
-	@echo "... LLVMeffective_address_analysis"
+	@echo "... LLVMlea_analysis"
 	@echo "... pass.o"
 	@echo "... pass.i"
 	@echo "... pass.s"
