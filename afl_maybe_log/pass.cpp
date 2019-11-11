@@ -1,30 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 #include "llvm/Pass.h"
-#include "llvm/IR/Function.h"
+#include "llvm/IR/Module.h"
+#include "llvm/IR/IRBuilder.h"
+
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Transforms/IPO/PassManagerBuilder.h"
 using namespace llvm;
 
-// Project Name : PrintFunc
+// Project Name : AFL
 //   (replace this with your NewProjectName )
 
 namespace {
-    struct PrintFuncPass : public FunctionPass {
+    struct AFLPass : public ModulePass {
         static char ID ;
-        PrintFuncPass() : FunctionPass(ID) {}
+        AFLPass() : ModulePass(ID) {}
 
-        virtual bool runOnFunction(Function &F) {
-            errs() << "I saw a function called " << F.getName() << "!\n" ;
-            return false ;
+        virtual bool runOnModule(Module &B) {
+            LLVMContext& context = M.getContext() ;
+            Integer Type *Int8Ty = IntegerType::
+            
+            return true ;
         }
     };
 }
 
-char PrintFuncPass::ID = 0;
+char AFLPass::ID = 0;
 
 static void
-registerPrintFuncPass(const PassManagerBuilder &, legacy::PassManagerBase &PM) {
-    PM.add(new PrintFuncPass());
+registerAFLPass(const PassManagerBuilder &, legacy::PassManagerBase &PM) {
+    PM.add(new AFLPass());
 }
 static RegisterStandardPasses
-RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerPrintFuncPass);
+RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerAFLPass);

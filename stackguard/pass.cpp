@@ -41,7 +41,9 @@ namespace {
             glob_canary->setAlignment(8) ;
             glob_canary->setInitializer(const_int_val);
             glob_canary->setExternallyInitialized(true);
-            errs() << "global value : \n" ;
+            errs() << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" ;
+            errs() << "@@@@  global value : \n" ;
+            errs() << "@@@@@@@@@@@@@@@@@@@@@@@@\n";
             glob_canary->print(errs());
             errs() << "\n";
             // glob_canary->setVisibility(GlobalValue::VisibilityTypes::ProtectedVisibility); 

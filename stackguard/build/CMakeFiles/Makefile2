@@ -57,7 +57,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/pingjui/llvm/stackguard
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pingjui/llvm/stackguard/bin
+CMAKE_BINARY_DIR = /home/pingjui/llvm/stackguard/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/intrinsics_gen.dir
@@ -66,14 +66,14 @@ CMAKE_BINARY_DIR = /home/pingjui/llvm/stackguard/bin
 CMakeFiles/intrinsics_gen.dir/all:
 	$(MAKE) -f CMakeFiles/intrinsics_gen.dir/build.make CMakeFiles/intrinsics_gen.dir/depend
 	$(MAKE) -f CMakeFiles/intrinsics_gen.dir/build.make CMakeFiles/intrinsics_gen.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/pingjui/llvm/stackguard/bin/CMakeFiles --progress-num= "Built target intrinsics_gen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/pingjui/llvm/stackguard/build/CMakeFiles --progress-num= "Built target intrinsics_gen"
 .PHONY : CMakeFiles/intrinsics_gen.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/intrinsics_gen.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/stackguard/bin/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/stackguard/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/intrinsics_gen.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/stackguard/bin/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/stackguard/build/CMakeFiles 0
 .PHONY : CMakeFiles/intrinsics_gen.dir/rule
 
 # Convenience name for target.
@@ -98,7 +98,7 @@ clean: CMakeFiles/intrinsics_gen.dir/clean
 CMakeFiles/LLVMstackguard.dir/all:
 	$(MAKE) -f CMakeFiles/LLVMstackguard.dir/build.make CMakeFiles/LLVMstackguard.dir/depend
 	$(MAKE) -f CMakeFiles/LLVMstackguard.dir/build.make CMakeFiles/LLVMstackguard.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/pingjui/llvm/stackguard/bin/CMakeFiles --progress-num=1,2 "Built target LLVMstackguard"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/pingjui/llvm/stackguard/build/CMakeFiles --progress-num=1,2 "Built target LLVMstackguard"
 .PHONY : CMakeFiles/LLVMstackguard.dir/all
 
 # Include target in all.
@@ -108,9 +108,9 @@ all: CMakeFiles/LLVMstackguard.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/LLVMstackguard.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/stackguard/bin/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/stackguard/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/LLVMstackguard.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/stackguard/bin/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingjui/llvm/stackguard/build/CMakeFiles 0
 .PHONY : CMakeFiles/LLVMstackguard.dir/rule
 
 # Convenience name for target.

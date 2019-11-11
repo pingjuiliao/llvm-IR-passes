@@ -46,7 +46,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/pingjui/llvm/stackguard
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pingjui/llvm/stackguard/bin
+CMAKE_BINARY_DIR = /home/pingjui/llvm/stackguard/build
 
 # Utility rule file for intrinsics_gen.
 
@@ -67,6 +67,6 @@ CMakeFiles/intrinsics_gen.dir/clean:
 .PHONY : CMakeFiles/intrinsics_gen.dir/clean
 
 CMakeFiles/intrinsics_gen.dir/depend:
-	cd /home/pingjui/llvm/stackguard/bin && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pingjui/llvm/stackguard /home/pingjui/llvm/stackguard /home/pingjui/llvm/stackguard/bin /home/pingjui/llvm/stackguard/bin /home/pingjui/llvm/stackguard/bin/CMakeFiles/intrinsics_gen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/pingjui/llvm/stackguard/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pingjui/llvm/stackguard /home/pingjui/llvm/stackguard /home/pingjui/llvm/stackguard/build /home/pingjui/llvm/stackguard/build /home/pingjui/llvm/stackguard/build/CMakeFiles/intrinsics_gen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/intrinsics_gen.dir/depend
 

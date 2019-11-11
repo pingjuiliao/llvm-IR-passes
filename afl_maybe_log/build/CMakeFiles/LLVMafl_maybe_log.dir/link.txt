@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC   -shared  -o libLLVMafl_maybe_log.so CMakeFiles/LLVMafl_maybe_log.dir/pass.cpp.o  -L/usr/lib/llvm-6.0/include 

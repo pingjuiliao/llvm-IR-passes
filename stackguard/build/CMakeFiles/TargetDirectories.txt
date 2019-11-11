@@ -1,4 +1,4 @@
-/home/pingjui/llvm/stackguard/bin/CMakeFiles/edit_cache.dir
-/home/pingjui/llvm/stackguard/bin/CMakeFiles/intrinsics_gen.dir
-/home/pingjui/llvm/stackguard/bin/CMakeFiles/rebuild_cache.dir
-/home/pingjui/llvm/stackguard/bin/CMakeFiles/LLVMstackguard.dir
+/home/pingjui/llvm/stackguard/build/CMakeFiles/edit_cache.dir
+/home/pingjui/llvm/stackguard/build/CMakeFiles/intrinsics_gen.dir
+/home/pingjui/llvm/stackguard/build/CMakeFiles/rebuild_cache.dir
+/home/pingjui/llvm/stackguard/build/CMakeFiles/LLVMstackguard.dir

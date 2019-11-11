@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/pingjui/llvm/stackguard/pass.cpp" "/home/pingjui/llvm/stackguard/bin/CMakeFiles/LLVMstackguard.dir/pass.cpp.o"
+  "/home/pingjui/llvm/stackguard/pass.cpp" "/home/pingjui/llvm/stackguard/build/CMakeFiles/LLVMstackguard.dir/pass.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
