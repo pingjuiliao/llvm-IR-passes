@@ -19,9 +19,8 @@ namespace {
         static char ID ;
         AFLPass() : ModulePass(ID) {}
 
-        virtual bool runOnModule(Module &B) {
+        virtual bool runOnModule(Module &M) {
             LLVMContext& context = M.getContext() ;
-            Integer Type *Int8Ty = IntegerType::
             
             return true ;
         }
@@ -35,4 +34,5 @@ registerAFLPass(const PassManagerBuilder &, legacy::PassManagerBase &PM) {
     PM.add(new AFLPass());
 }
 static RegisterStandardPasses
-RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerAFLPass);
+RegisterMyPass(PassManagerBuilder::EP_OptimizerLast, registerAFLPass);
+//RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerAFLPass);

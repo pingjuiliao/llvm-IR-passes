@@ -7,9 +7,11 @@
 #include "llvm/IR/Constant.h"
 #include "llvm/IR/Constants.h"
 #include "llvm/IR/GlobalVariable.h"
+#include "llvm/ADT/APInt.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Transforms/IPO/PassManagerBuilder.h"
+#include <vector>
 using namespace llvm;
 
 // Project Name : PrintFunc
@@ -23,10 +25,10 @@ namespace {
         
         virtual bool doInitialization(Module &M) {
             LLVMContext& context = M.getContext() ;
-            glob_func_count = new GlobalVariable(M, IntegerType::getInt32Ty(context), false, GlobalValue::CommonLinkage,
+            glob_func_count = new GlobalVariable(M, IntegerType::getInt64Ty(context), false, GlobalValue::CommonLinkage,
                                                     0, "func_count") ;
             glob_func_count->setAlignment(4) ;
-            ConstantInt* zero = ConstantInt::get(IntegerType::getInt32Ty(context), 1337) ;
+            ConstantInt* zero = ConstantInt::get(IntegerType::getInt64Ty(context), 1337) ;
             glob_func_count->setInitializer(zero) ;
         
         }
@@ -37,10 +39,26 @@ namespace {
             BasicBlock::iterator IP = EBB.getFirstInsertionPt() ;
             IRBuilder<> IRB(&(*IP)) ;
             LoadInst* load_glob = IRB.CreateLoad(glob_func_count) ;
-            Value *Inc = IRB.CreateAdd(IRB.getInt32(1), load_glob);
-            StoreInst *Store = IRB.CreateStore(Inc, glob_func_count);
+            Value *inc = IRB.CreateAdd(IRB.getInt64(1), load_glob);
+            StoreInst *store = IRB.CreateStore(inc, glob_func_count);
+            // printf
+            Value* format_string = IRB.CreateGlobalStringPtr("N == %lu\n") ;
+            LoadInst* another_load = IRB.CreateLoad(glob_func_count) ; // another load must be made. i.e. cannot use 'Value* inc' after store
+            std::vector<Value*> arr ;
+            arr.emplace_back(format_string) ;
+            arr.emplace_back(another_load) ;
+            Value* printf = F.getParent()->getOrInsertFunction("printf", Type::getVoidTy(context));
+            CallInst* call_printf = IRB.CreateCall(printf, arr);
+
+            
+            // Debug
             errs() << F.getName() << "\n" ;
-            errs() << glob_func_count << "\n" ;
+            
+            for ( auto it = F.begin() ; it != F.end() ; ++it ) {
+                errs() << *it << "\n" ; 
+            }
+            
+            
             return true ;
         }
     };

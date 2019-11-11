@@ -25,12 +25,16 @@ llvm/IR/Constants.h
 /home/pingjui/llvm/simple_pass/globvar/llvm/IR/Constants.h
 llvm/IR/GlobalVariable.h
 /home/pingjui/llvm/simple_pass/globvar/llvm/IR/GlobalVariable.h
+llvm/ADT/APInt.h
+/home/pingjui/llvm/simple_pass/globvar/llvm/ADT/APInt.h
 llvm/Support/raw_ostream.h
 /home/pingjui/llvm/simple_pass/globvar/llvm/Support/raw_ostream.h
 llvm/IR/LegacyPassManager.h
 /home/pingjui/llvm/simple_pass/globvar/llvm/IR/LegacyPassManager.h
 llvm/Transforms/IPO/PassManagerBuilder.h
 /home/pingjui/llvm/simple_pass/globvar/llvm/Transforms/IPO/PassManagerBuilder.h
+vector
+-
 
 /usr/lib/llvm-6.0/include/llvm-c/Types.h
 llvm/Support/DataTypes.h

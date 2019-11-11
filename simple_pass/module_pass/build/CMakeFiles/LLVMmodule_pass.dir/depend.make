@@ -20,6 +20,7 @@ CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/ADT/ST
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/ADT/SmallPtrSet.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/ADT/SmallString.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/ADT/SmallVector.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/ADT/Statistic.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/ADT/StringMap.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/ADT/StringRef.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/ADT/Twine.h
@@ -41,6 +42,8 @@ CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Bas
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/CallingConv.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Comdat.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Constant.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/ConstantFolder.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Constants.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/DataLayout.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/DebugLoc.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/DerivedTypes.h
@@ -52,14 +55,20 @@ CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Glo
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/GlobalObject.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/GlobalValue.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/GlobalVariable.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/IRBuilder.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/InstrTypes.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Instruction.def
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Instruction.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Instructions.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Intrinsics.gen
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Intrinsics.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/LLVMContext.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/LegacyPassManager.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Metadata.def
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Metadata.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Module.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/OperandTraits.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Operator.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/SymbolTableListTraits.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/TrackingMDRef.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Type.h
@@ -67,6 +76,7 @@ CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Use
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/User.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Value.def
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/Value.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/IR/ValueHandle.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/InitializePasses.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Pass.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/PassAnalysisSupport.h
@@ -76,6 +86,7 @@ CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/PassSu
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/AlignOf.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/Allocator.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/Atomic.h
+CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/AtomicOrdering.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/CBindingWrapping.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/Casting.h
 CMakeFiles/LLVMmodule_pass.dir/pass.cpp.o: /usr/lib/llvm-6.0/include/llvm/Support/CodeGen.h

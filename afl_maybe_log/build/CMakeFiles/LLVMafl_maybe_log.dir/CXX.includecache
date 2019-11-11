@@ -7,10 +7,16 @@
 #IncludeRegexTransform: 
 
 /home/pingjui/llvm/afl_maybe_log/pass.cpp
+stdio.h
+-
+stdlib.h
+-
+unistd.h
+-
 llvm/Pass.h
 /home/pingjui/llvm/afl_maybe_log/llvm/Pass.h
-llvm/IR/BasicBlock.h
-/home/pingjui/llvm/afl_maybe_log/llvm/IR/BasicBlock.h
+llvm/IR/Module.h
+/home/pingjui/llvm/afl_maybe_log/llvm/IR/Module.h
 llvm/IR/IRBuilder.h
 /home/pingjui/llvm/afl_maybe_log/llvm/IR/IRBuilder.h
 llvm/Support/raw_ostream.h
