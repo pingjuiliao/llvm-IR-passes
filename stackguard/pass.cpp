@@ -101,6 +101,7 @@ namespace {
             LoadInst* another_glob = check_bb_builder.CreateLoad(glob_canary);
             // Value* canary_cmp = check_bb_builder.CreateICmpEQ(load_canary_inst, canary_const);
             Value* canary_cmp = check_bb_builder.CreateICmpEQ(load_canary_inst, another_glob);
+            
             check_bb_builder.CreateCondBr(canary_cmp, ret_bb, check_bb);
 
             

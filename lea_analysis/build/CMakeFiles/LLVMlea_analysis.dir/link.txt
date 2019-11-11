@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC   -shared  -o libLLVMlea_analysis.so CMakeFiles/LLVMlea_analysis.dir/pass.cpp.o  -L/usr/lib/llvm-6.0/include 
