@@ -7,6 +7,7 @@
 |  [StackGuard]          | mimic stackguard                                       | only push constant |
 |   [T-fuzz]             | mimic T-fuzz                                           | flip the branch    |
 |  [Cmp reduce]          | divide n-bytes comparason into byte-by-byte comparason | int32 cmp completed|
+|  [AFL_maybe_log]       | afl instrumentation with forksrv                       | under construction |
 
 ### program analysis
 |    Project             | Description                                            |       status       |
