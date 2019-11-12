@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <vector>
 #define MAP_SIZE (1 << 16)
-
+#define SHM_ENV_VAR "__AFL_SHM_ID"
 using namespace llvm;
 
 
@@ -50,14 +50,18 @@ namespace {
         virtual bool runOnFunction(Function &F) {
             
             LLVMContext& C = F.getContext() ;
+            // Const (int64)
             ConstantInt* const_zero = ConstantInt::get(IntegerType::getInt64Ty(C), 0) ; 
             ConstantInt* const_one  = ConstantInt::get(IntegerType::getInt64Ty(C), 1) ; 
+            
             // LIBC functions
             Value* puts   = F.getParent()->getOrInsertFunction("puts", Type::getVoidTy(C)) ;
             Value* getenv = F.getParent()->getOrInsertFunction("getenv", PointerType::getInt8PtrTy(C)) ;
             Value* atoi   = F.getParent()->getOrInsertFunction("atoi", IntegerType::getInt32Ty(C)); 
             Value* shmat  = F.getParent()->getOrInsertFunction("shmat", PointerType::getInt8PtrTy(C)) ;
-        
+            Value* printf = F.getParent()->getOrInsertFunction("printf", Type::getVoidTy(C)) ;
+            Value* exit   = F.getParent()->getOrInsertFunction("exit", Type::getVoidTy(C)) ;
+
             
             errs() << "dealing with function " << F.getName() << "\n\n" ; 
             std::vector<BasicBlock*> original_blocks ;
@@ -88,8 +92,8 @@ namespace {
                 CallInst* call_maybe = IRB_maybe_log.CreateCall(puts, arr_maybe) ;
                 
                 LoadInst* load_afl_area_ptr = IRB_maybe_log.CreateLoad(afl_area_ptr) ; 
-                Value* test_afl_area_ptr    = IRB_maybe_log.CreateICmpEQ(load_afl_area_ptr, ConstantPointerNull::get(PointerType::get(IntegerType::getInt8Ty(C), 0)));
-                BranchInst* br_maybe_log    = IRB_maybe_log.CreateCondBr(test_afl_area_ptr, afl_setup_check_failure, afl_fail);
+                Value* test_afl_area_ptr    = IRB_maybe_log.CreateICmpNE(load_afl_area_ptr, ConstantPointerNull::get(PointerType::get(IntegerType::getInt8Ty(C), 0)));
+                BranchInst* br_maybe_log    = IRB_maybe_log.CreateCondBr(test_afl_area_ptr, afl_store, afl_setup_check_failure);
                 afl_maybe_log->getTerminator()->eraseFromParent() ;
 
                 /*******************
@@ -140,7 +144,7 @@ namespace {
                 ArrayRef<Value*> arr_shm_getenv(fs_shm_getenv) ;
                 CallInst* call_shm_getenv = IRB_shm_getenv.CreateCall(puts, arr_shm_getenv) ;
 
-                Value* env_string = IRB_shm_getenv.CreateGlobalStringPtr("AFL_SHM_ENV");
+                Value* env_string = IRB_shm_getenv.CreateGlobalStringPtr(SHM_ENV_VAR);
                 ArrayRef<Value*> getenv_argv(env_string) ;
                 CallInst* call_getenv = IRB_shm_getenv.CreateCall(getenv, getenv_argv) ;
                 Value* test_env = IRB_shm_getenv.CreateICmpNE(call_getenv, ConstantPointerNull::get(PointerType::getInt8PtrTy(C)));
@@ -160,32 +164,41 @@ namespace {
                 v.emplace_back(ConstantPointerNull::get(PointerType::getInt8PtrTy(C))) ; 
                 v.emplace_back(ConstantInt::get(IntegerType::getInt8Ty(C), 0));
                 CallInst* call_shmat = IRB_shm.CreateCall(shmat, v) ;
-                Value* alloca_cast_space = IRB_shm.CreateAlloca(IntegerType::getInt64Ty(C)); 
-                StoreInst*  store_inst   = IRB_shm.CreateStore(call_shmat, alloca_cast_space) ;
-                LoadInst* load_shmat_cast= IRB_shm.CreateLoad(alloca_cast_space) ;
+                Value* alloca_shmid_local = IRB_shm.CreateAlloca(PointerType::get(IntegerType::getInt8Ty(C), 0)); 
+                StoreInst*  store_inst   = IRB_shm.CreateStore(call_shmat, alloca_shmid_local) ;
+                LoadInst* load_shmat_cast= IRB_shm.CreateLoad(alloca_shmid_local) ;
                 
-                Value* test_shm  = IRB_shm.CreateICmpNE(load_shmat_cast, ConstantInt::get(IntegerType::getInt64Ty(C), -1)); // shmat returns -1 if error
+                Value* ffff = IRB_shm.CreateIntToPtr(ConstantInt::get(IntegerType::getInt64Ty(C), -1), PointerType::get(IntegerType::getInt8Ty(C), 0));
+                Value* test_shm  = IRB_shm.CreateICmpNE(call_shmat, ffff); // shmat returns -1 if error
                 BranchInst* br_shm = IRB_shm.CreateCondBr(test_shm, afl_shm_success, afl_fail);
                 afl_shm->getTerminator()->eraseFromParent();
                 
                 /***********************************
                  * afl_shm_success
                  * ***************************/
-                IRBuilder<> IRB_shm_success(afl_shm->getTerminator());
-                Value* fs_shm_success = IRB_shm_success.CreateGlobalStringPtr("__afl_shm_success");
-                ArrayRef<Value*> arr_shm_success(fs_shm_success);
-                CallInst* call_shm_success = IRB_shm_success.CreateCall(puts, fs_shm_success) ;
+                IRBuilder<> IRB_shm_success(afl_shm_success->getTerminator());
+                Value* fs_shm_success = IRB_shm_success.CreateGlobalStringPtr("__afl_shm_success: with shm_id == %p\n");
+                LoadInst* load_uint_shmid = IRB_shm_success.CreateLoad(alloca_shmid_local) ; 
+                std::vector<Value*> shmv;
+                shmv.emplace_back(fs_shm_success);
+                shmv.emplace_back(load_uint_shmid);
+                CallInst* call_shm_success = IRB_shm_success.CreateCall(printf, shmv) ;
                 
                 StoreInst* store_afl_area_ptr = IRB_shm_success.CreateStore(call_shmat, afl_area_ptr);
                 LoadInst* load_afl_global_area_ptr = IRB_shm_success.CreateLoad(afl_global_area_ptr) ;
                 LoadInst* load_dref_global_area_ptr= IRB_shm_success.CreateLoad(load_afl_global_area_ptr);
                 StoreInst* store_afl_global_area_ptr = IRB_shm_success.CreateStore(call_shmat, afl_global_area_ptr);
+                
                 // TODO: Fork Server
-
+                //  
+                
                 /**************************************
                  * afl_store
                  * ****************************/
                 IRBuilder<> IRB_store(afl_store->getTerminator());
+                Value* fs_store = IRB_store.CreateGlobalStringPtr("__afl_store") ;
+                ArrayRef<Value*> arr_afl_store(fs_store) ;
+                CallInst* call_afl_store = IRB_store.CreateCall(puts, arr_afl_store);
                 
                 // make up cur_loc
                 unsigned int cur_loc = random() % MAP_SIZE ;
@@ -215,8 +228,8 @@ namespace {
                 Store->setMetadata(F.getParent()->getMDKindID("nosanitize"), MDNode::get(C, None));
 
                 // inst_block ++ // number of instrumented blocks
-
-
+                BranchInst* br_store_to_ret = IRB_store.CreateBr(afl_ret) ;
+                afl_store->getTerminator()->eraseFromParent() ;
                 /***********************************
                  * afl_fail
                  * *******************************/
