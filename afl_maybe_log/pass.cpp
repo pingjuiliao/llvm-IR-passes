@@ -79,8 +79,9 @@ namespace {
                 BasicBlock* afl_store  = afl_shm_success->splitBasicBlock(IP);
                 BasicBlock* afl_fail = afl_store->splitBasicBlock(IP) ;
                 BasicBlock* afl_ret   = afl_fail->splitBasicBlock(IP);
-
-                // afl_maybe_log
+                /******************
+                 * afl_maybe_log
+                 *****************/
                 IRBuilder<> IRB_maybe_log(afl_maybe_log->getTerminator()) ;
                 Value* fs_maybe = IRB_maybe_log.CreateGlobalStringPtr("__afl_maybe_log");
                 ArrayRef<Value*> arr_maybe(fs_maybe) ;
@@ -91,7 +92,9 @@ namespace {
                 BranchInst* br_maybe_log    = IRB_maybe_log.CreateCondBr(test_afl_area_ptr, afl_setup_check_failure, afl_fail);
                 afl_maybe_log->getTerminator()->eraseFromParent() ;
 
-                // afl_setup_check_failure
+                /*******************
+                 * afl_setup_check_failure
+                 ******************/
                 IRBuilder<> IRB_setup_check_failure(afl_setup_check_failure->getTerminator());
                 Value* fs_setup_check_failure = IRB_setup_check_failure.CreateGlobalStringPtr("__afl_setup_chk_failure") ;
                 ArrayRef<Value*> arr_setup_check_failure(fs_setup_check_failure) ;
@@ -102,7 +105,10 @@ namespace {
                 BranchInst* br_setup_failure = IRB_setup_check_failure.CreateCondBr(cmp_setup_failure, afl_setup_check_global, afl_ret);
                 afl_setup_check_failure->getTerminator()->eraseFromParent() ;  
                 
-                // afl_setup_check_global
+                
+                /******************
+                 * afl_setup_check_global
+                 ******************/
                 IRBuilder<> IRB_setup_check_global(afl_setup_check_global->getTerminator());
                 Value* fs_setup_glob = IRB_setup_check_global.CreateGlobalStringPtr("__afl_setup_chk_global") ;
                 ArrayRef<Value*> arr_setup_glob(fs_setup_glob) ;
@@ -113,7 +119,10 @@ namespace {
                 BranchInst* br_setup_global = IRB_setup_check_global.CreateCondBr(cmp_setup_global, afl_setup, afl_shm_getenv);
                 afl_setup_check_global->getTerminator()->eraseFromParent() ;
                 
-                // afl_setup : simply load the global
+                
+                /**************************************
+                 * afl_setup ( simply load the global )
+                 **********************/
                 IRBuilder<> IRB_setup(afl_setup->getTerminator()) ;
                 Value* fs_setup = IRB_setup.CreateGlobalStringPtr("__afl_setup") ;
                 ArrayRef<Value *> arr_setup(fs_setup) ;
@@ -123,7 +132,9 @@ namespace {
                 LoadInst* load_dref_global     = IRB_setup.CreateLoad(load_non_null_global_area_ptr) ;
                 StoreInst* store_to_afl_area_ptr = IRB_setup.CreateStore(load_dref_global, afl_area_ptr) ;
                 
-                // afl_shm_getenv
+                /************************************
+                 * afl_shm_getenv
+                 * ****************/
                 IRBuilder<> IRB_shm_getenv(afl_shm_getenv->getTerminator()) ;
                 Value* fs_shm_getenv = IRB_shm_getenv.CreateGlobalStringPtr("__afl_shm_getenv") ;
                 ArrayRef<Value*> arr_shm_getenv(fs_shm_getenv) ;
@@ -134,24 +145,91 @@ namespace {
                 CallInst* call_getenv = IRB_shm_getenv.CreateCall(getenv, getenv_argv) ;
                 Value* test_env = IRB_shm_getenv.CreateICmpNE(call_getenv, ConstantPointerNull::get(PointerType::getInt8PtrTy(C)));
                 BranchInst* br_shm_env = IRB_shm_getenv.CreateCondBr(test_env, afl_shm, afl_fail) ;
+                afl_shm_getenv->getTerminator()->eraseFromParent() ;
 
-                // afl_shm
+                /************************************
+                 * afl_shm
+                 * *****************/
                 IRBuilder<> IRB_shm(afl_shm->getTerminator()) ;
                 ArrayRef<Value*> arr_env_ref(call_getenv); // this debug info : puts(getenv("AFL_SHM_ENV")) ;
                 CallInst* call_puts_env = IRB_shm.CreateCall(puts, arr_env_ref) ; 
                 
-
-                // afl_
-                // afl_store
+                CallInst* call_atoi = IRB_shm.CreateCall(atoi, arr_env_ref);
+                std::vector<Value*> v ; 
+                v.emplace_back(call_atoi); 
+                v.emplace_back(ConstantPointerNull::get(PointerType::getInt8PtrTy(C))) ; 
+                v.emplace_back(ConstantInt::get(IntegerType::getInt8Ty(C), 0));
+                CallInst* call_shmat = IRB_shm.CreateCall(shmat, v) ;
+                Value* alloca_cast_space = IRB_shm.CreateAlloca(IntegerType::getInt64Ty(C)); 
+                StoreInst*  store_inst   = IRB_shm.CreateStore(call_shmat, alloca_cast_space) ;
+                LoadInst* load_shmat_cast= IRB_shm.CreateLoad(alloca_cast_space) ;
                 
-                // afl_fail
+                Value* test_shm  = IRB_shm.CreateICmpNE(load_shmat_cast, ConstantInt::get(IntegerType::getInt64Ty(C), -1)); // shmat returns -1 if error
+                BranchInst* br_shm = IRB_shm.CreateCondBr(test_shm, afl_shm_success, afl_fail);
+                afl_shm->getTerminator()->eraseFromParent();
+                
+                /***********************************
+                 * afl_shm_success
+                 * ***************************/
+                IRBuilder<> IRB_shm_success(afl_shm->getTerminator());
+                Value* fs_shm_success = IRB_shm_success.CreateGlobalStringPtr("__afl_shm_success");
+                ArrayRef<Value*> arr_shm_success(fs_shm_success);
+                CallInst* call_shm_success = IRB_shm_success.CreateCall(puts, fs_shm_success) ;
+                
+                StoreInst* store_afl_area_ptr = IRB_shm_success.CreateStore(call_shmat, afl_area_ptr);
+                LoadInst* load_afl_global_area_ptr = IRB_shm_success.CreateLoad(afl_global_area_ptr) ;
+                LoadInst* load_dref_global_area_ptr= IRB_shm_success.CreateLoad(load_afl_global_area_ptr);
+                StoreInst* store_afl_global_area_ptr = IRB_shm_success.CreateStore(call_shmat, afl_global_area_ptr);
+                // TODO: Fork Server
+
+                /**************************************
+                 * afl_store
+                 * ****************************/
+                IRBuilder<> IRB_store(afl_store->getTerminator());
+                
+                // make up cur_loc
+                unsigned int cur_loc = random() % MAP_SIZE ;
+                ConstantInt *CurLoc = ConstantInt::get(IntegerType::getInt32Ty(C), cur_loc) ;
+                
+                // load prev_loc
+                LoadInst* PrevLoc = IRB_store.CreateLoad(afl_prev_loc);
+                PrevLoc->setMetadata(F.getParent()->getMDKindID("nosanitize"), MDNode::get(C, None));
+                Value* PrevLocCasted = IRB_store.CreateZExt(PrevLoc, IRB_store.getInt32Ty());
+
+                // load SHM pointer
+                LoadInst* MapPtr = IRB_store.CreateLoad(afl_area_ptr);
+                MapPtr->setMetadata(F.getParent()->getMDKindID("nosanitize"), MDNode::get(C, None));
+                Value* MapPtrIdx = IRB_store.CreateGEP(MapPtr, IRB_store.CreateXor(PrevLocCasted, CurLoc));
+
+                // Update bitmap
+                LoadInst* Counter = IRB_store.CreateLoad(MapPtrIdx);
+                Counter->setMetadata(F.getParent()->getMDKindID("nosanitize"), MDNode::get(C, None));
+                Value *Incr = IRB_store.CreateAdd(Counter, ConstantInt::get(IntegerType::getInt8Ty(C), 1));
+
+                StoreInst* write_map = IRB_store.CreateStore(Incr, MapPtrIdx) ;
+                write_map->setMetadata(F.getParent()->getMDKindID("nosanitize"), MDNode::get(C, None));
+
+                // Set prev_loc to cur_loc >> 1
+                StoreInst* Store = 
+                    IRB_store.CreateStore(ConstantInt::get(IntegerType::getInt32Ty(C), cur_loc >> 1), afl_prev_loc);
+                Store->setMetadata(F.getParent()->getMDKindID("nosanitize"), MDNode::get(C, None));
+
+                // inst_block ++ // number of instrumented blocks
+
+
+                /***********************************
+                 * afl_fail
+                 * *******************************/
                 IRBuilder<> IRB_fail(afl_fail->getTerminator());
                 Value* fs_fail = IRB_fail.CreateGlobalStringPtr("__afl_fail") ;
                 ArrayRef<Value*> arr_fail(fs_fail) ;
                 CallInst* call_fail = IRB_fail.CreateCall(puts, arr_fail) ;
                 StoreInst* store_failure = IRB_fail.CreateStore(const_one, afl_setup_failure) ; 
 
-                // afl_ret
+                /************************************
+                 * afl_ret
+                 * ***********************************/
+                // The original basic block
             }
 
             return true ;

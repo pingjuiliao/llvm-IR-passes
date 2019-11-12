@@ -24,6 +24,16 @@ afl_maybe_log(void) {
 }
 int
 main(void) {
+    int r ;
+    uint64_t x = 30;
     afl_maybe_log() ;
+    if ((r = read(0, &x, sizeof(x))) <= 0 ) {
+        fprintf(stderr, "failure\n") ;
+        exit(-1) ;
+    }
+    if ( x == 0xffffffffffffffff ) {
+        puts("correct");
+    }
+
     return 0 ;
 }
