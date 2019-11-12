@@ -4,14 +4,17 @@
 
 #include "llvm/Pass.h"
 #include "llvm/IR/Function.h"
+#include "llvm/IR/BasicBlock.h"
+
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/IR/GlobalVariable.h"
 #include "llvm/IR/GlobalValue.h"
+#include "llvm/IR/IRBuilder.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Transforms/IPO/PassManagerBuilder.h"
 #include <stdlib.h>
-
+#include <vector>
 #define MAP_SIZE (1 << 16)
 
 using namespace llvm;
@@ -25,27 +28,130 @@ namespace {
     struct AFLPass : public FunctionPass {
         static char ID ;
         AFLPass() : FunctionPass(ID) {}
+        GlobalVariable* afl_global_area_ptr ;
         GlobalVariable* afl_area_ptr; // 64B coverage bitmap
         GlobalVariable* afl_prev_loc; // prev_loc
+        GlobalVariable* afl_setup_failure ; 
+        GlobalVariable* afl_temp ; // prev_loc
+        
+        
         virtual bool doInitialization(Module &M) {
             LLVMContext& C = M.getContext() ;
-            afl_area_ptr = new GlobalVariable(M, PointerType::get(IntegerType::getInt8Ty(C), 0), false, GlobalValue::ExternalLinkage, 0, "__afl_area_ptr");
+            ConstantInt* const_zero = ConstantInt::get(IntegerType::getInt64Ty(C), 0) ; 
+            afl_global_area_ptr = new GlobalVariable(M, PointerType::get(PointerType::get(IntegerType::getInt8Ty(C), 0), 0),false, GlobalValue::ExternalLinkage, const_zero, "__afl_global_area_ptr" ); 
+            afl_area_ptr = new GlobalVariable(M, PointerType::get(IntegerType::getInt8Ty(C), 0), false, GlobalValue::ExternalLinkage, const_zero, "__afl_area_ptr");
+            afl_prev_loc = new GlobalVariable(M, IntegerType::getInt32Ty(C), false, GlobalValue::ExternalLinkage, const_zero, "__afl_prev_loc", 0, GlobalVariable::GeneralDynamicTLSModel, 0, false) ;
 
-            afl_prev_loc = new GlobalVariable(M, IntegerType::getInt32Ty(C), false, GlobalValue::ExternalLinkage, 0, "__afl_prev_loc", 0, GlobalVariable::GeneralDynamicTLSModel, 0, false) ;
+            afl_temp = new GlobalVariable(M, IntegerType::getInt64Ty(C), false, GlobalValue::CommonLinkage, const_zero, "__afl_temp");
+            afl_setup_failure = new GlobalVariable(M, IntegerType::getInt64Ty(C), false, GlobalValue::CommonLinkage, const_zero, "__afl_setup_failure") ;
             errs() << "initialization Done" << "\n" ;
         }
-        virtual bool runOnFunction(Function &F) {
-            LLVMContext& C = F.getContext() ;
-                 
-            for ( auto &BB: F ) {
-                BasicBlock::iterator IP = BB.getFirstInsertionPt() ; // BB == BB_check
-                BasicBlock* BB_fail = BB->splitBasicBlock(IP, "bb_no_afl_area") ; 
-                BasicBlock* BB_ret  = BB_check->splitBasicBlock(IP, "bb_")
 
-                // IRBuilder<> IRB(&(*IP)) ;
-                // %cur_loc = <compile_time_random>
-                // afl_area_ptr[] 
+        virtual bool runOnFunction(Function &F) {
+            
+            LLVMContext& C = F.getContext() ;
+            ConstantInt* const_zero = ConstantInt::get(IntegerType::getInt64Ty(C), 0) ; 
+            ConstantInt* const_one  = ConstantInt::get(IntegerType::getInt64Ty(C), 1) ; 
+            // LIBC functions
+            Value* puts   = F.getParent()->getOrInsertFunction("puts", Type::getVoidTy(C)) ;
+            Value* getenv = F.getParent()->getOrInsertFunction("getenv", PointerType::getInt8PtrTy(C)) ;
+            Value* atoi   = F.getParent()->getOrInsertFunction("atoi", IntegerType::getInt32Ty(C)); 
+            Value* shmat  = F.getParent()->getOrInsertFunction("shmat", PointerType::getInt8PtrTy(C)) ;
+        
+            
+            errs() << "dealing with function " << F.getName() << "\n\n" ; 
+            std::vector<BasicBlock*> original_blocks ;
+            
+            for ( auto &BB: F) {
+                original_blocks.emplace_back(&BB) ;
+            }
+            for (std::vector<BasicBlock*>::iterator it = original_blocks.begin(); it != original_blocks.end(); ++it) {
+                BasicBlock* afl_maybe_log = *it ;
+                BasicBlock::iterator IP = afl_maybe_log->getFirstInsertionPt() ; // pBB == BB_check == "__afl_maybe_log"
                 
+                // split blocks 
+                BasicBlock* afl_setup_check_failure = afl_maybe_log->splitBasicBlock(IP) ;
+                BasicBlock* afl_setup_check_global  = afl_setup_check_failure->splitBasicBlock(IP) ;
+                BasicBlock* afl_setup               = afl_setup_check_global->splitBasicBlock(IP) ;
+                BasicBlock* afl_shm_getenv          = afl_setup->splitBasicBlock(IP);
+                BasicBlock* afl_shm                 = afl_shm_getenv->splitBasicBlock(IP);
+                BasicBlock* afl_shm_success         = afl_shm->splitBasicBlock(IP);
+                BasicBlock* afl_store  = afl_shm_success->splitBasicBlock(IP);
+                BasicBlock* afl_fail = afl_store->splitBasicBlock(IP) ;
+                BasicBlock* afl_ret   = afl_fail->splitBasicBlock(IP);
+
+                // afl_maybe_log
+                IRBuilder<> IRB_maybe_log(afl_maybe_log->getTerminator()) ;
+                Value* fs_maybe = IRB_maybe_log.CreateGlobalStringPtr("__afl_maybe_log");
+                ArrayRef<Value*> arr_maybe(fs_maybe) ;
+                CallInst* call_maybe = IRB_maybe_log.CreateCall(puts, arr_maybe) ;
+                
+                LoadInst* load_afl_area_ptr = IRB_maybe_log.CreateLoad(afl_area_ptr) ; 
+                Value* test_afl_area_ptr    = IRB_maybe_log.CreateICmpEQ(load_afl_area_ptr, ConstantPointerNull::get(PointerType::get(IntegerType::getInt8Ty(C), 0)));
+                BranchInst* br_maybe_log    = IRB_maybe_log.CreateCondBr(test_afl_area_ptr, afl_setup_check_failure, afl_fail);
+                afl_maybe_log->getTerminator()->eraseFromParent() ;
+
+                // afl_setup_check_failure
+                IRBuilder<> IRB_setup_check_failure(afl_setup_check_failure->getTerminator());
+                Value* fs_setup_check_failure = IRB_setup_check_failure.CreateGlobalStringPtr("__afl_setup_chk_failure") ;
+                ArrayRef<Value*> arr_setup_check_failure(fs_setup_check_failure) ;
+                CallInst* call_setup_chk_failure = IRB_setup_check_failure.CreateCall(puts, arr_setup_check_failure) ;
+                
+                LoadInst* load_afl_setup_failure = IRB_setup_check_failure.CreateLoad(afl_setup_failure) ;
+                Value* cmp_setup_failure = IRB_setup_check_failure.CreateICmpEQ(load_afl_setup_failure, const_zero) ;
+                BranchInst* br_setup_failure = IRB_setup_check_failure.CreateCondBr(cmp_setup_failure, afl_setup_check_global, afl_ret);
+                afl_setup_check_failure->getTerminator()->eraseFromParent() ;  
+                
+                // afl_setup_check_global
+                IRBuilder<> IRB_setup_check_global(afl_setup_check_global->getTerminator());
+                Value* fs_setup_glob = IRB_setup_check_global.CreateGlobalStringPtr("__afl_setup_chk_global") ;
+                ArrayRef<Value*> arr_setup_glob(fs_setup_glob) ;
+                CallInst* call_setup_glob = IRB_setup_check_global.CreateCall(puts, arr_setup_glob) ;
+                
+                LoadInst* load_afl_setup_global = IRB_setup_check_global.CreateLoad(afl_global_area_ptr) ;
+                Value* cmp_setup_global = IRB_setup_check_global.CreateICmpNE(load_afl_setup_global, ConstantPointerNull::get(PointerType::get(PointerType::get(IntegerType::getInt8Ty(C), 0), 0))) ;
+                BranchInst* br_setup_global = IRB_setup_check_global.CreateCondBr(cmp_setup_global, afl_setup, afl_shm_getenv);
+                afl_setup_check_global->getTerminator()->eraseFromParent() ;
+                
+                // afl_setup : simply load the global
+                IRBuilder<> IRB_setup(afl_setup->getTerminator()) ;
+                Value* fs_setup = IRB_setup.CreateGlobalStringPtr("__afl_setup") ;
+                ArrayRef<Value *> arr_setup(fs_setup) ;
+                CallInst* call_setup = IRB_setup.CreateCall(puts, arr_setup) ;
+
+                LoadInst* load_non_null_global_area_ptr = IRB_setup.CreateLoad(afl_global_area_ptr);
+                LoadInst* load_dref_global     = IRB_setup.CreateLoad(load_non_null_global_area_ptr) ;
+                StoreInst* store_to_afl_area_ptr = IRB_setup.CreateStore(load_dref_global, afl_area_ptr) ;
+                
+                // afl_shm_getenv
+                IRBuilder<> IRB_shm_getenv(afl_shm_getenv->getTerminator()) ;
+                Value* fs_shm_getenv = IRB_shm_getenv.CreateGlobalStringPtr("__afl_shm_getenv") ;
+                ArrayRef<Value*> arr_shm_getenv(fs_shm_getenv) ;
+                CallInst* call_shm_getenv = IRB_shm_getenv.CreateCall(puts, arr_shm_getenv) ;
+
+                Value* env_string = IRB_shm_getenv.CreateGlobalStringPtr("AFL_SHM_ENV");
+                ArrayRef<Value*> getenv_argv(env_string) ;
+                CallInst* call_getenv = IRB_shm_getenv.CreateCall(getenv, getenv_argv) ;
+                Value* test_env = IRB_shm_getenv.CreateICmpNE(call_getenv, ConstantPointerNull::get(PointerType::getInt8PtrTy(C)));
+                BranchInst* br_shm_env = IRB_shm_getenv.CreateCondBr(test_env, afl_shm, afl_fail) ;
+
+                // afl_shm
+                IRBuilder<> IRB_shm(afl_shm->getTerminator()) ;
+                ArrayRef<Value*> arr_env_ref(call_getenv); // this debug info : puts(getenv("AFL_SHM_ENV")) ;
+                CallInst* call_puts_env = IRB_shm.CreateCall(puts, arr_env_ref) ; 
+                
+
+                // afl_
+                // afl_store
+                
+                // afl_fail
+                IRBuilder<> IRB_fail(afl_fail->getTerminator());
+                Value* fs_fail = IRB_fail.CreateGlobalStringPtr("__afl_fail") ;
+                ArrayRef<Value*> arr_fail(fs_fail) ;
+                CallInst* call_fail = IRB_fail.CreateCall(puts, arr_fail) ;
+                StoreInst* store_failure = IRB_fail.CreateStore(const_one, afl_setup_failure) ; 
+
+                // afl_ret
             }
 
             return true ;

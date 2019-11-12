@@ -17,12 +17,16 @@ llvm/Pass.h
 /home/pingjui/llvm/afl_maybe_log/llvm/Pass.h
 llvm/IR/Function.h
 /home/pingjui/llvm/afl_maybe_log/llvm/IR/Function.h
+llvm/IR/BasicBlock.h
+/home/pingjui/llvm/afl_maybe_log/llvm/IR/BasicBlock.h
 llvm/IR/IRBuilder.h
 /home/pingjui/llvm/afl_maybe_log/llvm/IR/IRBuilder.h
 llvm/IR/GlobalVariable.h
 /home/pingjui/llvm/afl_maybe_log/llvm/IR/GlobalVariable.h
 llvm/IR/GlobalValue.h
 /home/pingjui/llvm/afl_maybe_log/llvm/IR/GlobalValue.h
+llvm/IR/IRBuilder.h
+/home/pingjui/llvm/afl_maybe_log/llvm/IR/IRBuilder.h
 llvm/Support/raw_ostream.h
 /home/pingjui/llvm/afl_maybe_log/llvm/Support/raw_ostream.h
 llvm/IR/LegacyPassManager.h
@@ -30,6 +34,8 @@ llvm/IR/LegacyPassManager.h
 llvm/Transforms/IPO/PassManagerBuilder.h
 /home/pingjui/llvm/afl_maybe_log/llvm/Transforms/IPO/PassManagerBuilder.h
 stdlib.h
+-
+vector
 -
 
 /usr/lib/llvm-6.0/include/llvm-c/Types.h

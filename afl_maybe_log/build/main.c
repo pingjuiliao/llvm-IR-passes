@@ -1,27 +1,29 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdint.h>
-uint32_t fibo(uint32_t n);
+#include<unistd.h>
+#include<string.h>
 
+char buf[50];
+void vuln(void);
+
+void
+func(void) {
+    puts("func") ;
+}
 int
 main( int argc, char** argv) {
-    uint32_t input = 0;
-    uint32_t result = 0;
-    if ( argc < 2 ) {
-        printf("Usage: %s <fibonacci_parameter>\n", argv[0]);
-        exit(1);
-    }
-    input = atoi(argv[1]);
-    result = fibo(input);
-    printf("fibbonacci(%u) number is %u\n", input, result);
+    // vuln();
+    func();
+    puts("main()") ;
     return 0;
 }
 
-uint32_t 
-fibo(uint32_t n) {
-    if ( n <= 1 ) {
-        return 1 ;
-    }
-    return fibo(n-1) + fibo(n-2) ;
+void
+vuln(void) {
+    char dst[10];
+    read(0, buf, sizeof(buf));
+    strcpy(dst,buf);
+    return ;
 }
 
