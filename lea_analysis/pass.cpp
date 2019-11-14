@@ -1,5 +1,6 @@
 #include "llvm/Pass.h"
 #include "llvm/IR/Function.h"
+#include "llvm/IR/DerivedTypes.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Transforms/IPO/PassManagerBuilder.h"
@@ -29,7 +30,8 @@ namespace {
                     // GEP =  base, multiplier + offset ( op1*op2+op3 ) 
                     int tainted = 0 ;
                     for ( unsigned i = 1 ; i < pi->getNumOperands() ; i ++ ) {
-                        auto operand = pi->getOperand(i) ;
+                        Value* operand = pi->getOperand(i) ;
+                        // operand->hello();
                         // if constant
                         if ( auto con = dyn_cast<Constant>(operand) ) {
                             continue ;
@@ -61,9 +63,9 @@ namespace {
 
             // debug
             //errs() << "\n\n" ;
-            //for ( auto pbb = F.begin() ; pbb!= F.end() ; pbb ++ ) {
-            //    errs() << *pbb << "\n" ;
-            //}
+            // for ( auto pbb = F.begin() ; pbb!= F.end() ; pbb ++ ) {
+            //     errs() << *pbb << "\n" ;
+            // }
             errs() << "\n\n" ;
             return false ;
         }

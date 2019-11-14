@@ -11,6 +11,8 @@ llvm/Pass.h
 /home/pingjui/llvm/lea_analysis/llvm/Pass.h
 llvm/IR/Function.h
 /home/pingjui/llvm/lea_analysis/llvm/IR/Function.h
+llvm/IR/DerivedTypes.h
+/home/pingjui/llvm/lea_analysis/llvm/IR/DerivedTypes.h
 llvm/Support/raw_ostream.h
 /home/pingjui/llvm/lea_analysis/llvm/Support/raw_ostream.h
 llvm/IR/LegacyPassManager.h
