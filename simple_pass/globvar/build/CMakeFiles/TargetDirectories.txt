@@ -1,4 +1,0 @@
-/home/pingjui/llvm/simple_pass/globvar/build/CMakeFiles/rebuild_cache.dir
-/home/pingjui/llvm/simple_pass/globvar/build/CMakeFiles/edit_cache.dir
-/home/pingjui/llvm/simple_pass/globvar/build/CMakeFiles/intrinsics_gen.dir
-/home/pingjui/llvm/simple_pass/globvar/build/CMakeFiles/LLVMglobvar.dir

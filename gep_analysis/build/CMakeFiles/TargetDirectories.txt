@@ -1,4 +1,0 @@
-/home/pingjui/llvm/gep_analysis/build/CMakeFiles/rebuild_cache.dir
-/home/pingjui/llvm/gep_analysis/build/CMakeFiles/edit_cache.dir
-/home/pingjui/llvm/gep_analysis/build/CMakeFiles/intrinsics_gen.dir
-/home/pingjui/llvm/gep_analysis/build/CMakeFiles/LLVMgep_analysis.dir

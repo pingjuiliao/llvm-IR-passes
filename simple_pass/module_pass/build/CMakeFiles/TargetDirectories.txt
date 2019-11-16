@@ -1,4 +1,0 @@
-/home/pingjui/llvm/simple_pass/module_pass/build/CMakeFiles/rebuild_cache.dir
-/home/pingjui/llvm/simple_pass/module_pass/build/CMakeFiles/edit_cache.dir
-/home/pingjui/llvm/simple_pass/module_pass/build/CMakeFiles/intrinsics_gen.dir
-/home/pingjui/llvm/simple_pass/module_pass/build/CMakeFiles/LLVMmodule_pass.dir

@@ -1,4 +1,0 @@
-/home/pingjui/llvm/t_fuzz/bin/CMakeFiles/rebuild_cache.dir
-/home/pingjui/llvm/t_fuzz/bin/CMakeFiles/edit_cache.dir
-/home/pingjui/llvm/t_fuzz/bin/CMakeFiles/intrinsics_gen.dir
-/home/pingjui/llvm/t_fuzz/bin/CMakeFiles/LLVMt_fuzz.dir

@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC   -shared  -o libLLVMglobvar.so CMakeFiles/LLVMglobvar.dir/pass.cpp.o  -L/usr/lib/llvm-6.0/include 
