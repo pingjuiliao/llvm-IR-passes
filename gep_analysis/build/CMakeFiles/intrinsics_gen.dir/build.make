@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pingjui/afl-mutant/gep_analysis
+CMAKE_SOURCE_DIR = /home/pingjui/llvm/gep_analysis
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pingjui/afl-mutant/gep_analysis/build
+CMAKE_BINARY_DIR = /home/pingjui/llvm/gep_analysis/build
 
 # Utility rule file for intrinsics_gen.
 
@@ -67,6 +67,6 @@ CMakeFiles/intrinsics_gen.dir/clean:
 .PHONY : CMakeFiles/intrinsics_gen.dir/clean
 
 CMakeFiles/intrinsics_gen.dir/depend:
-	cd /home/pingjui/afl-mutant/gep_analysis/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pingjui/afl-mutant/gep_analysis /home/pingjui/afl-mutant/gep_analysis /home/pingjui/afl-mutant/gep_analysis/build /home/pingjui/afl-mutant/gep_analysis/build /home/pingjui/afl-mutant/gep_analysis/build/CMakeFiles/intrinsics_gen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/pingjui/llvm/gep_analysis/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pingjui/llvm/gep_analysis /home/pingjui/llvm/gep_analysis /home/pingjui/llvm/gep_analysis/build /home/pingjui/llvm/gep_analysis/build /home/pingjui/llvm/gep_analysis/build/CMakeFiles/intrinsics_gen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/intrinsics_gen.dir/depend
 
