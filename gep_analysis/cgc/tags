@@ -1,0 +1,99 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+GLOBALS	cromu_041.c	/^} GLOBALS;$/;"	t	typeref:struct:__anon3	file:
+MAX_MESSAGES	cromu_041.c	15;"	d	file:
+MAX_MESSAGES_LOGIN	cromu_041.c	14;"	d	file:
+MAX_MSG_LEN	cromu_041.c	16;"	d	file:
+MAX_NAME_LEN	cromu_041.c	11;"	d	file:
+MAX_PASS_LEN	cromu_041.c	12;"	d	file:
+MAX_USERS	cromu_041.c	13;"	d	file:
+MESSAGE_LENGTH	cromu_001.c	138;"	d	file:
+Message	cromu_041.c	/^} Message;$/;"	t	typeref:struct:__anon1	file:
+USERNAME_LENGTH	cromu_001.c	139;"	d	file:
+User	cromu_041.c	/^} User;$/;"	t	typeref:struct:__anon2	file:
+_terminate	cromu_001.c	/^_terminate(int ret) {$/;"	f
+add_message	cromu_001.c	/^size_t add_message( pmessage_manager pman, pmessage pm )$/;"	f
+add_message	cromu_041.c	/^int add_message(char *dest, char *src, char *msg, char draft)$/;"	f
+allocate	cromu_001.c	/^allocate(size_t size, int is_executable, void** addr) {$/;"	f
+bad_login_count	cromu_041.c	/^int bad_login_count;$/;"	v
+create_message	cromu_001.c	/^pmessage create_message( char * msg_string )$/;"	f
+create_user	cromu_001.c	/^size_t create_user( puser_manager pum, char *username )$/;"	f
+create_user	cromu_041.c	/^void create_user(int tries)$/;"	f
+current_user	cromu_041.c	/^User *current_user;$/;"	v
+deallocate	cromu_001.c	/^deallocate(void *addr, size_t length) {$/;"	f
+delete_message	cromu_001.c	/^void delete_message( pmessage_manager pmm, size_t message_id )$/;"	f
+first_login	cromu_041.c	/^	int first_login;$/;"	m	struct:__anon2	file:
+from	cromu_041.c	/^	char from[MAX_NAME_LEN];$/;"	m	struct:__anon1	file:
+get_draft_count	cromu_041.c	/^int get_draft_count(char *name)$/;"	f
+get_inbox_count	cromu_041.c	/^int get_inbox_count(char *name)$/;"	f
+get_total_count	cromu_041.c	/^int get_total_count()$/;"	f
+get_user	cromu_001.c	/^puser get_user( puser_manager pum, char *username )$/;"	f
+get_user__index	cromu_041.c	/^int get_user__index(char *name)$/;"	f
+globs	cromu_041.c	/^GLOBALS globs;$/;"	v
+handle_A_input	cromu_041.c	/^int handle_A_input()$/;"	f
+handle_B_input	cromu_041.c	/^int handle_B_input()$/;"	f
+handle_loggedin	cromu_001.c	/^void handle_loggedin( puser_manager pum, puser pu )$/;"	f
+handle_menu	cromu_001.c	/^void handle_menu ( )$/;"	f
+index	cromu_041.c	/^	int index; \/\/ index into the listOfMessages$/;"	m	struct:__anon2	file:
+init_manager	cromu_001.c	/^pmessage_manager init_manager( void )$/;"	f
+init_users	cromu_001.c	/^puser_manager init_users( void )$/;"	f
+is_draft	cromu_041.c	/^	char is_draft;$/;"	m	struct:__anon1	file:
+itoa	cromu_001.c	/^itoa( char *out, size_t val, size_t max ) {$/;"	f
+listOfMessages	cromu_041.c	/^	Message listOfMessages[MAX_USERS][MAX_MESSAGES];$/;"	m	struct:__anon3	file:
+listOfUsers	cromu_041.c	/^User *listOfUsers[MAX_USERS];$/;"	v
+list_all_messages	cromu_041.c	/^void list_all_messages()$/;"	f
+list_drafts	cromu_041.c	/^void list_drafts(char *name)$/;"	f
+list_inbox	cromu_041.c	/^void list_inbox(char *name)$/;"	f
+list_messages	cromu_001.c	/^void list_messages( pmessage_manager pmm )$/;"	f
+list_unread_messages	cromu_001.c	/^void list_unread_messages( pmessage_manager pmm )$/;"	f
+list_users	cromu_001.c	/^void list_users( puser_manager pum )$/;"	f
+list_users	cromu_041.c	/^void list_users()$/;"	f
+login	cromu_041.c	/^int login(char *name, char *passwd)$/;"	f
+logout	cromu_041.c	/^int logout()$/;"	f
+main	cromu_001.c	/^int main(void) {$/;"	f
+main	cromu_041.c	/^int main()$/;"	f
+match	cromu_041.c	/^	int match;$/;"	m	struct:__anon1	file:
+message	cromu_001.c	/^	char message[MESSAGE_LENGTH];$/;"	m	struct:message	file:
+message	cromu_001.c	/^typedef struct message {$/;"	s	file:
+message	cromu_001.c	/^} message, *pmessage;$/;"	t	typeref:struct:message	file:
+message_count	cromu_001.c	/^	unsigned int message_count;$/;"	m	struct:message_manager	file:
+message_id	cromu_001.c	/^	unsigned int message_id;$/;"	m	struct:message	file:
+message_manager	cromu_001.c	/^typedef struct message_manager {$/;"	s	file:
+message_manager	cromu_001.c	/^} message_manager, *pmessage_manager;$/;"	t	typeref:struct:message_manager	file:
+msg	cromu_041.c	/^	char msg[MAX_MSG_LEN];$/;"	m	struct:__anon1	file:
+msg_count	cromu_041.c	/^	int msg_count;$/;"	m	struct:__anon2	file:
+msg_count_login	cromu_041.c	/^int msg_count_login;$/;"	v
+name	cromu_001.c	/^	char name[USERNAME_LENGTH];$/;"	m	struct:user	file:
+name	cromu_041.c	/^	char name[MAX_NAME_LEN];$/;"	m	struct:__anon2	file:
+next	cromu_001.c	/^	struct message *next;$/;"	m	struct:message	typeref:struct:message::message	file:
+next	cromu_001.c	/^	struct user *next;$/;"	m	struct:user	typeref:struct:user::user	file:
+password	cromu_041.c	/^	char password[MAX_PASS_LEN];$/;"	m	struct:__anon2	file:
+pmessage	cromu_001.c	/^} message, *pmessage;$/;"	t	typeref:struct:message	file:
+pmessage_manager	cromu_001.c	/^} message_manager, *pmessage_manager;$/;"	t	typeref:struct:message_manager	file:
+pmm	cromu_001.c	/^	pmessage_manager pmm;	$/;"	m	struct:user	file:
+print_A	cromu_041.c	/^void print_A()$/;"	f
+print_B	cromu_041.c	/^void print_B()$/;"	f
+print_draft_for_del	cromu_041.c	/^void print_draft_for_del(char *name)$/;"	f
+print_draft_for_send	cromu_041.c	/^void print_draft_for_send(char *name)$/;"	f
+print_message	cromu_041.c	/^void print_message(int user_offset, int msg_offset)$/;"	f
+printer	cromu_041.c	/^	void (*printer)();$/;"	m	struct:__anon3	file:
+puser	cromu_001.c	/^} user, *puser;$/;"	t	typeref:struct:user	file:
+puser_manager	cromu_001.c	/^} user_manager, *puser_manager;$/;"	t	typeref:struct:user_manager	file:
+read	cromu_001.c	/^	unsigned int read;$/;"	m	struct:message	file:
+read_message	cromu_001.c	/^void read_message( pmessage_manager pmm, size_t message_id )$/;"	f
+receive_until	cromu_001.c	/^receive_until( char *dst, char delim, size_t max) {$/;"	f
+receive_until	cromu_041.c	/^receive_until( char *dst, char delim, size_t max) {$/;"	f
+root	cromu_001.c	/^	pmessage root;$/;"	m	struct:message_manager	file:
+root	cromu_001.c	/^	puser root;$/;"	m	struct:user_manager	file:
+send_user_message	cromu_001.c	/^size_t send_user_message( puser_manager pum, char *username, char *msg )$/;"	f
+to	cromu_041.c	/^	char to[MAX_NAME_LEN];$/;"	m	struct:__anon1	file:
+user	cromu_001.c	/^typedef struct user {$/;"	s	file:
+user	cromu_001.c	/^} user, *puser;$/;"	t	typeref:struct:user	file:
+user_count	cromu_001.c	/^	unsigned int user_count;$/;"	m	struct:user_manager	file:
+user_count	cromu_041.c	/^int user_count;$/;"	v
+user_manager	cromu_001.c	/^typedef struct user_manager {$/;"	s	file:
+user_manager	cromu_001.c	/^} user_manager, *puser_manager;$/;"	t	typeref:struct:user_manager	file:
