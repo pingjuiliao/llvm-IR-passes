@@ -1,4 +1,0 @@
-/home/pingjui/llvm/magic_value_extract/bin/CMakeFiles/edit_cache.dir
-/home/pingjui/llvm/magic_value_extract/bin/CMakeFiles/intrinsics_gen.dir
-/home/pingjui/llvm/magic_value_extract/bin/CMakeFiles/rebuild_cache.dir
-/home/pingjui/llvm/magic_value_extract/bin/CMakeFiles/LLVMmagic_value_extract.dir

@@ -1,0 +1,15 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdint.h>
+
+void foo(void) {
+    puts("foo foo") ;
+}
+
+int
+main( int argc, char** argv) {
+    puts("main main") ;
+    foo() ;
+    return 0;
+}
+
