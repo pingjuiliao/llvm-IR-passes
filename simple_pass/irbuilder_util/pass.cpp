@@ -7,7 +7,9 @@
 #include "llvm/IR/GlobalVariable.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/IRBuilder.h"
+#include "llvm/ADT/Twine.h"
 #include <vector>
+
 using namespace llvm;
 
 // Project Name : Util
@@ -26,7 +28,9 @@ namespace {
 
             
             IRBuilder<> IRB(I->getNextNode()) ;
-            Value* str = IRB.CreateGlobalStringPtr("returned") ;
+            Twine func_str = "return to " + F->getName() ; 
+            Value* str = IRB.CreateGlobalStringPtr(func_str.str()) ;
+            // Value* str = IRB.CreateGlobalStringPtr(func_str.getSingleStringRef() ) ;
             ArrayRef<Value*> puts_argv(str);
             CallInst* call_puts = IRB.CreateCall(puts, puts_argv) ;
              
