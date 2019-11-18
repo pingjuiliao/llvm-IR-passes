@@ -1,0 +1,12 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdint.h>
+uint32_t fibo(uint32_t n);
+
+int
+main( int argc, char** argv) {
+    int i = 0; 
+    int j = 1337;
+    int x = 20l
+    return 0;
+}
